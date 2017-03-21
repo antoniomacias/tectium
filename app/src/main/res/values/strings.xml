@@ -3,4 +3,11 @@
     <string name="title_home">Home</string>
     <string name="title_dashboard">Dashboard</string>
     <string name="title_notifications">Notifications</string>
+    <string name="user">Usuario</string>
+    <string name="password">Contraseña</string>
+    <string name="log">Iniciar sesión</string>
+    <string name="help_login_text">¿Has olvidado tus datos de inicio de sesión? Obtén ayuda.</string>
+
+
+    <string name="facebook_app_id">1720065391618313</string>
 </resources>
