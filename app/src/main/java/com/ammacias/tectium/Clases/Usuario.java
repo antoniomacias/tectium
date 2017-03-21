@@ -118,4 +118,20 @@ public class Usuario {
     public void setAdmin(String admin) {
         this.admin = admin;
     }
+
+    @Override
+    public String toString() {
+        return "Usuario{" +
+                "id='" + id + '\'' +
+                ", nombre='" + nombre + '\'' +
+                ", apellidos='" + apellidos + '\'' +
+                ", mail='" + mail + '\'' +
+                ", tokenId='" + tokenId + '\'' +
+                ", idFacebook='" + idFacebook + '\'' +
+                ", foto='" + foto + '\'' +
+                ", sexo='" + sexo + '\'' +
+                ", cumpleanos='" + cumpleanos + '\'' +
+                ", admin='" + admin + '\'' +
+                '}';
+    }
 }

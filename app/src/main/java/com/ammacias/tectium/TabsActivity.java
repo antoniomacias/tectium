@@ -3,13 +3,20 @@ package com.ammacias.tectium;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.widget.TextView;
 
-public class TabsActivity extends AppCompatActivity {
+import com.ammacias.tectium.Clases.Evento;
+import com.ammacias.tectium.Fragments.EventoFragment;
+import com.ammacias.tectium.Interfaces.ITectium;
+
+public class TabsActivity extends AppCompatActivity implements ITectium{
 
     private TextView mTextMessage;
+    //Fragment
+    Fragment f;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -18,13 +25,22 @@ public class TabsActivity extends AppCompatActivity {
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navigation_home:
-                    mTextMessage.setText(R.string.title_home);
+                    f = new EventoFragment();
+                    getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.content, f)
+                            .commit();
                     return true;
                 case R.id.navigation_dashboard:
-                    mTextMessage.setText(R.string.title_dashboard);
+                    /*f = new RespuestaFragment();
+                    getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.content, f)
+                            .commit();*/
                     return true;
                 case R.id.navigation_notifications:
-                    mTextMessage.setText(R.string.title_notifications);
+                    /*f = new ConfigFragment();
+                    getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.content, f)
+                            .commit();*/
                     return true;
             }
             return false;
@@ -42,4 +58,9 @@ public class TabsActivity extends AppCompatActivity {
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
     }
 
+
+    @Override
+    public void onClickEvento(Evento e) {
+        System.out.println("Evento: "+e.toString());
+    }
 }

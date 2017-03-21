@@ -6,12 +6,16 @@ import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.ammacias.tectium.Clases.Evento;
 import com.ammacias.tectium.Clases.Usuario;
 import com.ammacias.tectium.Interfaces.IRetrofit;
+import com.ammacias.tectium.Interfaces.ITectium;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
@@ -34,9 +38,10 @@ import retrofit.GsonConverterFactory;
 import retrofit.Response;
 import retrofit.Retrofit;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity{
 
     EditText user, password;
+    Button iniciar;
 
     //Facebook
     private LoginButton loginButton;
@@ -55,8 +60,18 @@ public class MainActivity extends AppCompatActivity {
         user = (EditText) findViewById(R.id.user);
         password = (EditText) findViewById(R.id.password);
         loginButton = (LoginButton)findViewById(R.id.login_button);
+        iniciar = (Button) findViewById(R.id.iniciarSesion);
 
 
+
+        //TODO: QUITAR CUANDO FUNCIONE EL LOGIN BIEN
+        iniciar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(MainActivity.this, TabsActivity.class);
+                startActivity(i);
+            }
+        });
         // Le damos permisos específicos para almacenar su email. La app le avisará automáticamente.
         loginButton.setReadPermissions(Arrays.asList(
                 "public_profile", "email", "user_birthday")); //, "user_birthday", "user_friends"
@@ -149,6 +164,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         callbackManager.onActivityResult(requestCode, resultCode, data);
 
+        if (resultCode == 0){
+
+        }else if (resultCode == -1){
+            Intent i = new Intent(MainActivity.this, TabsActivity.class);
+            startActivity(i);
+        }
     }
 
     private Bundle getFacebookData(JSONObject object) {
@@ -207,8 +228,9 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Throwable t) {
-                System.out.println("    Error al crear el usuario: "+t.getMessage());
+                System.out.println("Error al crear el usuario: "+t.getMessage());
             }
         });
     }
+
 }

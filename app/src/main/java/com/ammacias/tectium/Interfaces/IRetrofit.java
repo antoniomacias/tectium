@@ -1,5 +1,6 @@
 package com.ammacias.tectium.Interfaces;
 
+import com.ammacias.tectium.Clases.Eventos;
 import com.ammacias.tectium.Clases.Usuario;
 
 import retrofit.Call;
@@ -25,4 +26,8 @@ public interface IRetrofit {
 
     @GET("usuario")
     Call<Usuario> getUsuario(@Query("id") String id);
+
+    @GET("eventos")
+    Call<Eventos> getFullEvents();
+
 }

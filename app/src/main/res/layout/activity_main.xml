@@ -16,7 +16,7 @@
         android:layout_marginLeft="59dp"
         app:layout_constraintLeft_toLeftOf="parent"
         android:layout_marginBottom="57dp"
-        app:layout_constraintBottom_toTopOf="@+id/Iniciarsesión"
+        app:layout_constraintBottom_toTopOf="@+id/iniciarSesion"
         android:hint="@string/password"
         tools:layout_constraintRight_creator="1"
         android:layout_marginStart="59dp"
@@ -41,7 +41,7 @@
         tools:layout_constraintLeft_creator="1" />
 
     <Button
-        android:id="@+id/Iniciarsesión"
+        android:id="@+id/iniciarSesion"
         android:layout_width="0dp"
         android:layout_height="48dp"
         android:layout_marginLeft="59dp"
