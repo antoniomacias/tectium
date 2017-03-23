@@ -16,6 +16,8 @@ import com.ammacias.tectium.Clases.Evento;
 import com.ammacias.tectium.Clases.Usuario;
 import com.ammacias.tectium.Interfaces.IRetrofit;
 import com.ammacias.tectium.Interfaces.ITectium;
+import com.ammacias.tectium.localdb.CategoriaDB;
+import com.ammacias.tectium.localdb.CategoriaDBDao;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
@@ -33,6 +35,7 @@ import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
 
+import retrofit.Call;
 import retrofit.Callback;
 import retrofit.GsonConverterFactory;
 import retrofit.Response;
@@ -48,6 +51,9 @@ public class MainActivity extends AppCompatActivity{
     private CallbackManager callbackManager;
     String id_facebook, token_id;
     String nombre, apellidos, mail, sexo, cumpleanos, foto;
+
+    //@usuarioExiste
+    boolean bandera = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +74,24 @@ public class MainActivity extends AppCompatActivity{
         iniciar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                boolean first_run = false;
+                SharedPreferences settings = getSharedPreferences("PREFS_NAME", 0);
+                first_run = settings.getBoolean("FIRST_RUN", false);
+                if (!first_run) { // do the thing for the first time
+
+
+                    System.out.println("*****************************\n****************************\nENTRO POR PRIMERA VEZ");
+                    getCategorias();
+
+
+                    settings = getSharedPreferences("PREFS_NAME", 0);
+                    SharedPreferences.Editor editor = settings.edit();
+                    editor.putBoolean("FIRST_RUN", true);
+                    editor.commit();
+                } else { // other time your app loads
+                    System.out.println("Ya no descargo");
+                }
+
                 Intent i = new Intent(MainActivity.this, TabsActivity.class);
                 startActivity(i);
             }
@@ -102,7 +126,6 @@ public class MainActivity extends AppCompatActivity{
                         System.out.println("Nombre: "+nombre+"\nApellidos: "+apellidos+"\nEmail: "+mail
                                 +"\nSexo: "+sexo+"\nCumpleaños: "+cumpleanos);
 
-                        //crearUsuario();
 
                         String idSharedPreferences = "";
                         SharedPreferences settings = getSharedPreferences("PREFS_FACEBOOK", 0);
@@ -115,15 +138,16 @@ public class MainActivity extends AppCompatActivity{
                         //Primera vez
                         if (idSharedPreferences.equals("N") || id_facebook.equals("")) {
                             System.out.println("*****************************\n****************************\nLOGIN POR PRIMERA VEZ");
-                            boolean bandera = false;
+
 
                             //Busco que no exista
                             //TODO: Petición retrofit que devuelve si existe el registro con id_facebook
+
                             //boolean bandera = peticion
 
 
                             //Si no existe: Creo al usuario
-                            if (!bandera) {
+                            if (!usuarioExiste()){
                                 crearUsuario();
                             }
 
@@ -231,6 +255,70 @@ public class MainActivity extends AppCompatActivity{
                 System.out.println("Error al crear el usuario: "+t.getMessage());
             }
         });
+    }
+
+    public boolean usuarioExiste(){
+        Retrofit retrofit1 = new Retrofit.Builder()
+                .baseUrl(IRetrofit.ENDPOINT)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        retrofit1.create(IRetrofit.class).getUsuario(id_facebook).enqueue(new Callback<Usuario>() {
+
+            @Override
+            public void onResponse(Response<Usuario> response, Retrofit retrofit) {
+                if (response.isSuccess()){
+                    bandera = true;
+                    System.out.println("Existe el usuario");
+                }else{
+                    System.out.println("NO existe el usuario");
+                    bandera = false;
+                }
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                System.out.println("Error: "+t.getMessage());
+            }
+        });
+        return bandera;
+    }
+
+    public void getCategorias() {
+/*
+        Retrofit retrofit1 = new Retrofit.Builder()
+                .baseUrl(IRetrofit.ENDPOINT)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        retrofit1.create(IRetrofit.class).getCategorias().enqueue(new Callback<CategoriaDB>() {
+            @Override
+            public void onResponse(Response<CategoriaDB> response, Retrofit retrofit) {
+                if (response.isSuccess()) {
+                    CategoriaDB r = response.body();
+                    CategoriaDBDao categoriaDBDao= DatabaseConection.getRankingDBDao(MainActivity.this);
+
+                    for (Ranking a: r.getData()) {
+                        // System.out.println("RANKING: "+a);
+                        //"id, nombre, banda, fecha, ruta"
+                        RankingDB m = new RankingDB();
+                        m.setIdUsuario(a.getIdUsuario());
+                        m.setNombre(a.getNombre());
+                        m.setApellidos(a.getApellidos());
+                        m.setIdface(a.getIdface());
+                        m.setFecha(a.getFecha());
+                        m.setAciertos(a.getAciertos());
+
+                        rankingDBDao.insertOrReplace(m);
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                System.out.println(t.getMessage());
+            }
+        });*/
     }
 
 }

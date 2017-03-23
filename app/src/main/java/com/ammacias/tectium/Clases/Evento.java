@@ -14,6 +14,9 @@ public class Evento {
     @SerializedName("nombre")
     @Expose
     private String nombre;
+    @SerializedName("sitio")
+    @Expose
+    private String sitio;
     @SerializedName("descripcion")
     @Expose
     private String descripcion;
@@ -41,6 +44,14 @@ public class Evento {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    public String getSitio() {
+        return sitio;
+    }
+
+    public void setSitio(String sitio) {
+        this.sitio = sitio;
     }
 
     public String getDescripcion() {
@@ -80,6 +91,7 @@ public class Evento {
         return "Evento{" +
                 "id='" + id + '\'' +
                 ", nombre='" + nombre + '\'' +
+                ", sitio='" + sitio + '\'' +
                 ", descripcion='" + descripcion + '\'' +
                 ", fecha='" + fecha + '\'' +
                 ", foto=" + foto +

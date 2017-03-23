@@ -4,6 +4,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ammacias.tectium.Clases.Evento;
@@ -37,8 +38,13 @@ public class MyEventoRecyclerViewAdapter extends RecyclerView.Adapter<MyEventoRe
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
-        holder.mIdView.setText(mValues.get(position).getNombre());
-        holder.mContentView.setText(mValues.get(position).getDescripcion());
+
+        holder.nombre.setText(mValues.get(position).getNombre());
+        holder.sitio.setText(mValues.get(position).getSitio());
+        holder.fecha.setText(mValues.get(position).getFecha());
+        holder.precio.setText(mValues.get(position).getPrecio());
+        holder.descripcion.setText(mValues.get(position).getDescripcion());
+        //holder.foto.setImageBitmap(R.drawable.com_facebook_auth_dialog_background);
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,15 +65,35 @@ public class MyEventoRecyclerViewAdapter extends RecyclerView.Adapter<MyEventoRe
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
-        public final TextView mIdView;
-        public final TextView mContentView;
+        public final TextView nombre;
+        public final TextView sitio;
+        public final TextView fecha;
+        public final TextView precio;
+        public final TextView descripcion;
+        public final ImageView foto;
+        /*public final ImageView fav;
+        public final ImageView compartir;
+        public final ImageView img_fecha;
+        public final ImageView img_precio;*/
         public Evento mItem;
 
         public ViewHolder(View view) {
             super(view);
             mView = view;
-            mIdView = (TextView) view.findViewById(R.id.id);
-            mContentView = (TextView) view.findViewById(R.id.content);
+
+            nombre = (TextView) view.findViewById(R.id.nombre);
+            sitio = (TextView) view.findViewById(R.id.sitio);
+            fecha = (TextView) view.findViewById(R.id.fecha);
+            precio = (TextView) view.findViewById(R.id.precio);
+            descripcion = (TextView) view.findViewById(R.id.descripcion);
+
+            foto = (ImageView) view.findViewById(R.id.foto);
+            /*fav = (ImageView) view.findViewById(R.id.fav);
+            compartir = (ImageView) view.findViewById(R.id.compartir);
+            img_fecha = (ImageView) view.findViewById(R.id.img_fecha);
+            img_precio = (ImageView) view.findViewById(R.id.img_precio);*/
+
+
         }
 
         @Override

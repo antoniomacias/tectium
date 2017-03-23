@@ -8,6 +8,7 @@ import retrofit.http.Field;
 import retrofit.http.FormUrlEncoded;
 import retrofit.http.GET;
 import retrofit.http.POST;
+import retrofit.http.Path;
 import retrofit.http.Query;
 
 /**
@@ -24,8 +25,8 @@ public interface IRetrofit {
                              @Field("id_facebook") String id_facebook, @Field("foto") String foto,
                              @Field("sexo") String sexo, @Field("cumpleanos") String cumpleanos);
 
-    @GET("usuario")
-    Call<Usuario> getUsuario(@Query("id") String id);
+    @GET("usuario/{id}")
+    Call<Usuario> getUsuario(@Path("id") String idFace);
 
     @GET("eventos")
     Call<Eventos> getFullEvents();
