@@ -63,4 +63,13 @@ public class CategoriaDB {
         this.tag = tag;
     }
 
+    @Override
+    public String toString() {
+        return "CategoriaDB{" +
+                "id=" + id +
+                ", nombre='" + nombre + '\'' +
+                ", descripcion='" + descripcion + '\'' +
+                ", tag='" + tag + '\'' +
+                '}';
+    }
 }

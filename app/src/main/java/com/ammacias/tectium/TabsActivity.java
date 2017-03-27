@@ -14,7 +14,6 @@ import com.ammacias.tectium.Interfaces.ITectium;
 
 public class TabsActivity extends AppCompatActivity implements ITectium{
 
-    private TextView mTextMessage;
     //Fragment
     Fragment f;
 
@@ -53,7 +52,6 @@ public class TabsActivity extends AppCompatActivity implements ITectium{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tabs);
 
-        mTextMessage = (TextView) findViewById(R.id.message);
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 

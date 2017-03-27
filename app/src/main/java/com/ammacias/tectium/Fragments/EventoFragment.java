@@ -121,13 +121,13 @@ public class EventoFragment extends Fragment {
             public void onResponse(Response<Eventos> response, Retrofit retrofit) {
                 if (response.isSuccess()){
                     Eventos result= response.body();
-                    List<Evento> listaEvento = new ArrayList<Evento>();
+                    /*List<Evento> listaEvento = new ArrayList<Evento>();
 
                     for (Evento e: result.getData()) {
                         listaEvento.add(e);
-                    }
+                    }*/
 
-                    recyclerView.setAdapter(new MyEventoRecyclerViewAdapter(listaEvento, mListener));
+                    recyclerView.setAdapter(new MyEventoRecyclerViewAdapter(result.getData(), mListener));
 
                 }
             }

@@ -2,12 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/Tectium.iml" filepath="$PROJECT_DIR$/Tectium.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/greendao/greendao.iml" filepath="$PROJECT_DIR$/greendao/greendao.iml" />
-      <module fileurl="file://$PROJECT_DIR$/tectium.iml" filepath="$PROJECT_DIR$/tectium.iml" />
       <module fileurl="file://$PROJECT_DIR$/tectium.iml" filepath="$PROJECT_DIR$/tectium.iml" />
     </modules>
   </component>

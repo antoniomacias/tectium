@@ -1,5 +1,6 @@
 package com.ammacias.tectium.Interfaces;
 
+import com.ammacias.tectium.Clases.Categorias;
 import com.ammacias.tectium.Clases.Eventos;
 import com.ammacias.tectium.Clases.Usuario;
 
@@ -30,5 +31,8 @@ public interface IRetrofit {
 
     @GET("eventos")
     Call<Eventos> getFullEvents();
+
+    @GET("categorias")
+    Call<Categorias> getCategorias();
 
 }

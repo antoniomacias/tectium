@@ -12,12 +12,14 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.ammacias.tectium.Clases.Categorias;
 import com.ammacias.tectium.Clases.Evento;
 import com.ammacias.tectium.Clases.Usuario;
 import com.ammacias.tectium.Interfaces.IRetrofit;
 import com.ammacias.tectium.Interfaces.ITectium;
 import com.ammacias.tectium.localdb.CategoriaDB;
 import com.ammacias.tectium.localdb.CategoriaDBDao;
+import com.ammacias.tectium.localdb.DatabaseConnection;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
@@ -158,8 +160,17 @@ public class MainActivity extends AppCompatActivity{
                             editor.commit();
                         }else{
 
+                            System.out.println("No es la primera vez");
                             //TODO: Si el id de SharedPrefs != id_facebook
                             //TODO: Petición retrofit que devuelve si existe el registro con id_facebook
+
+                            //Si no existe: Creo al usuario
+                            if (!usuarioExiste()){
+                                System.out.println("Usuario no existe");
+                                crearUsuario();
+                            }else{
+                                System.out.println("Usuario existe");
+                            }
 
                             settings = getSharedPreferences("PREFS_FACEBOOK", 0);
                             SharedPreferences.Editor editor = settings.edit();
@@ -285,32 +296,29 @@ public class MainActivity extends AppCompatActivity{
     }
 
     public void getCategorias() {
-/*
+
         Retrofit retrofit1 = new Retrofit.Builder()
                 .baseUrl(IRetrofit.ENDPOINT)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
-        retrofit1.create(IRetrofit.class).getCategorias().enqueue(new Callback<CategoriaDB>() {
+        retrofit1.create(IRetrofit.class).getCategorias().enqueue(new Callback<Categorias>() {
             @Override
-            public void onResponse(Response<CategoriaDB> response, Retrofit retrofit) {
+            public void onResponse(Response<Categorias> response, Retrofit retrofit) {
                 if (response.isSuccess()) {
-                    CategoriaDB r = response.body();
-                    CategoriaDBDao categoriaDBDao= DatabaseConection.getRankingDBDao(MainActivity.this);
+                    Categorias r = response.body();
+                    CategoriaDBDao categoriaDBDao= DatabaseConnection.getCategoriaDBDao(MainActivity.this);
 
-                    for (Ranking a: r.getData()) {
-                        // System.out.println("RANKING: "+a);
-                        //"id, nombre, banda, fecha, ruta"
-                        RankingDB m = new RankingDB();
-                        m.setIdUsuario(a.getIdUsuario());
-                        m.setNombre(a.getNombre());
-                        m.setApellidos(a.getApellidos());
-                        m.setIdface(a.getIdface());
-                        m.setFecha(a.getFecha());
-                        m.setAciertos(a.getAciertos());
+                    for (CategoriaDB c: r.getData()){
+                        CategoriaDB m = new CategoriaDB();
+                        m.setId(c.getId());
+                        m.setNombre(c.getNombre());
+                        m.setDescripcion(c.getDescripcion());
+                        m.setTag(c.getTag());
 
-                        rankingDBDao.insertOrReplace(m);
+                        categoriaDBDao.insertOrReplace(m);
                     }
+                    System.out.println("*****************CategoriasDBDAO ALL***********\n"+categoriaDBDao.loadAll());
                 }
             }
 
@@ -318,7 +326,7 @@ public class MainActivity extends AppCompatActivity{
             public void onFailure(Throwable t) {
                 System.out.println(t.getMessage());
             }
-        });*/
+        });
     }
 
 }
