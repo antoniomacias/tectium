@@ -39,6 +39,23 @@ public class Usuario {
     @Expose
     private String admin;
 
+
+    public Usuario() {
+    }
+
+    public Usuario(String id, String nombre, String apellidos, String mail, String tokenId, String idFacebook, String foto, String sexo, String cumpleanos, String admin) {
+        this.id = id;
+        this.nombre = nombre;
+        this.apellidos = apellidos;
+        this.mail = mail;
+        this.tokenId = tokenId;
+        this.idFacebook = idFacebook;
+        this.foto = foto;
+        this.sexo = sexo;
+        this.cumpleanos = cumpleanos;
+        this.admin = admin;
+    }
+
     public String getId() {
         return id;
     }

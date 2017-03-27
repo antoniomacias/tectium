@@ -1,7 +1,10 @@
 package com.ammacias.tectium.Interfaces;
 
 import com.ammacias.tectium.Clases.Categorias;
+import com.ammacias.tectium.Clases.Evento_usuario;
 import com.ammacias.tectium.Clases.Eventos;
+import com.ammacias.tectium.Clases.Eventos_usuarios;
+import com.ammacias.tectium.Clases.Example;
 import com.ammacias.tectium.Clases.Usuario;
 
 import retrofit.Call;
@@ -35,8 +38,22 @@ public interface IRetrofit {
     @GET("categorias")
     Call<Categorias> getCategorias();
 
+    //Crear un Evento_Usuario
     @FormUrlEncoded
     @POST("evento_usuario")
-    Call<Usuario> eventoFav(@Field("id_usuario") String id_usuario, @Field("id_evento") String id_evento,
-                             @Field("fav") String fav, @Field("leido") String leido);
+    Call<Example> crearEventoFav(@Field("id_usuario") String id_usuario, @Field("id_evento") String id_evento,
+                            @Field("fav") String fav, @Field("leido") String leido);
+
+    //GET un Evento_Usuario
+    @GET("evento_usuario_item")
+    Call<Evento_usuario> getOneEventUsuario(@Query("id_usuario") String id_usuario,@Query("id_evento") String id_evento);
+
+    //Editar FAV un Evento_Usuario
+    @FormUrlEncoded
+    @POST("evento_usuario_fav")
+    Call<Example> editarFavEventoUsuario(@Field("id_usuario") String id_usuario, @Field("id_evento") String id_evento,
+                                 @Field("fav") String fav);
+
+    @GET("usuario/{idtoken}")
+    Call<Usuario> getUsuarioToken(@Path("idtoken") String idtoken);
 }

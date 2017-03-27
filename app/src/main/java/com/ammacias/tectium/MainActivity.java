@@ -271,20 +271,25 @@ public class MainActivity extends AppCompatActivity{
     }
 
     private void dameUsuario() {
-       /* Usuario current_user = new Usuario(us.getId(), nombre, apellidos, email, idface, authToken);
-        ((Application_vars) getApplication()).setUsuario(current_user);*/
+
         Retrofit retrofit1 = new Retrofit.Builder()
                 .baseUrl(IRetrofit.ENDPOINT)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
-        retrofit1.create(IRetrofit.class).createUser(nombre, apellidos, mail,
-                token_id, id_facebook, foto, sexo, cumpleanos ).enqueue(new Callback<Usuario>() {
+        retrofit1.create(IRetrofit.class).getUsuarioToken(token_id).enqueue(new Callback<Usuario>() {
 
             @Override
             public void onResponse(Response<Usuario> response, Retrofit retrofit) {
-                System.out.println("Exito al crear el usuario");
-                dameUsuario();
+                if (response.isSuccess()){
+                    if (response.body().getId()!=null){
+                        Usuario current_user = new Usuario(response.body().getId(), response.body().getNombre(),
+                                response.body().getApellidos(),response.body().getMail(), response.body().getTokenId(),
+                                response.body().getIdFacebook(), response.body().getFoto(), response.body().getSexo(),
+                                response.body().getCumpleanos(), response.body().getAdmin());
+                        ((Application_vars) getApplication()).setUsuario(current_user);
+                    }
+                }
             }
 
             @Override

@@ -9,11 +9,15 @@ import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.ammacias.tectium.Clases.Evento;
+import com.ammacias.tectium.Clases.Evento_usuario;
+import com.ammacias.tectium.Clases.Eventos_usuarios;
+import com.ammacias.tectium.Clases.Example;
 import com.ammacias.tectium.Clases.Usuario;
 import com.ammacias.tectium.Fragments.EventoFragment;
 import com.ammacias.tectium.Fragments.ListaEventosFragment;
 import com.ammacias.tectium.Interfaces.IRetrofit;
 import com.ammacias.tectium.Interfaces.ITectium;
+import com.ammacias.tectium.Utils.Application_vars;
 
 import retrofit.Callback;
 import retrofit.GsonConverterFactory;
@@ -32,7 +36,7 @@ public class TabsActivity extends AppCompatActivity implements ITectium{
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             switch (item.getItemId()) {
                 case R.id.navigation_home:
-                    f = new ListaEventosFragment();
+                    f = new EventoFragment();
 
                    /* Bundle args = new Bundle();
                     args.put("arg", TabsActivity.this);
@@ -81,21 +85,96 @@ public class TabsActivity extends AppCompatActivity implements ITectium{
 
     @Override
     public void onClickFav(Evento e) {
+
+        //TODO: Si existe el registro en la tabla usuario_evento hago update sino inserto
+        existeRegistroDelEvento(e.getId());
+
+    }
+
+    private void existeRegistroDelEvento(final String idE) {
         Retrofit retrofit1 = new Retrofit.Builder()
                 .baseUrl(IRetrofit.ENDPOINT)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
-        retrofit1.create(IRetrofit.class).eventoFav().enqueue(new Callback<Usuario>() {
+        //TODO: No es 1, es usuario.getId() de APPLICATION
+        retrofit1.create(IRetrofit.class).getOneEventUsuario(((Application_vars)getApplication()).getUsuario().getId(), idE).enqueue(new Callback<Evento_usuario>() {
 
             @Override
-            public void onResponse(Response<Usuario> response, Retrofit retrofit) {
-                System.out.println("Exito al crear el usuario");
+            public void onResponse(Response<Evento_usuario> response, Retrofit retrofit) {
+                if (response.isSuccess()){
+                    System.out.println(response.body().getIdEvento());
+                    System.out.println(response.body().getFav());
+                    System.out.println(response.body().getIdUsuario());
+                   if (response.body().getId()!=null){
+                       updateEventoUsuario(idE, response.body().getFav());
+                   }else{
+                       crearEventoUsuario(idE);
+                   }
+                }
             }
 
             @Override
             public void onFailure(Throwable t) {
-                System.out.println("Error al crear el usuario: "+t.getMessage());
+                System.out.println("Error al encontrar el evento: "+t.getMessage());
+            }
+        });
+    }
+
+    private void updateEventoUsuario(String idE, String fav) {
+        String favoritoFinal;
+        if (Integer.parseInt(fav)==0){
+            favoritoFinal = "1";
+        }else{
+            favoritoFinal = "0";
+        }
+
+        Retrofit retrofit1 = new Retrofit.Builder()
+                .baseUrl(IRetrofit.ENDPOINT)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        //TODO: No es 1, es usuario.getId() de APPLICATION
+        retrofit1.create(IRetrofit.class).editarFavEventoUsuario(((Application_vars)getApplication()).getUsuario().getId(),idE, favoritoFinal).enqueue(new Callback<Example>() {
+
+            @Override
+            public void onResponse(Response<Example> response, Retrofit retrofit) {
+                if (response.isSuccess()){
+
+                    System.out.println("Exito al cambiar de fav el evento");
+
+                }
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                System.out.println("Error al favear el evento: "+t.getMessage());
+            }
+        });
+
+    }
+
+    private void crearEventoUsuario(String idE) {
+        Retrofit retrofit1 = new Retrofit.Builder()
+                .baseUrl(IRetrofit.ENDPOINT)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        //TODO: No es 1, es usuario.getId() de APPLICATION
+        retrofit1.create(IRetrofit.class).crearEventoFav(((Application_vars)getApplication()).getUsuario().getId(),idE, "1", "0").enqueue(new Callback<Example>() {
+
+            @Override
+            public void onResponse(Response<Example> response, Retrofit retrofit) {
+                if (response.isSuccess()){
+
+                    System.out.println("Exito al favear el evento");
+
+                }
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                System.out.println("Error al favear el evento: "+t.getMessage());
             }
         });
     }
