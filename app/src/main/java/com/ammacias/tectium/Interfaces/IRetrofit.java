@@ -35,4 +35,8 @@ public interface IRetrofit {
     @GET("categorias")
     Call<Categorias> getCategorias();
 
+    @FormUrlEncoded
+    @POST("evento_usuario")
+    Call<Usuario> eventoFav(@Field("id_usuario") String id_usuario, @Field("id_evento") String id_evento,
+                             @Field("fav") String fav, @Field("leido") String leido);
 }

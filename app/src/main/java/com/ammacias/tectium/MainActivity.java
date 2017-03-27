@@ -17,6 +17,7 @@ import com.ammacias.tectium.Clases.Evento;
 import com.ammacias.tectium.Clases.Usuario;
 import com.ammacias.tectium.Interfaces.IRetrofit;
 import com.ammacias.tectium.Interfaces.ITectium;
+import com.ammacias.tectium.Utils.Application_vars;
 import com.ammacias.tectium.localdb.CategoriaDB;
 import com.ammacias.tectium.localdb.CategoriaDBDao;
 import com.ammacias.tectium.localdb.DatabaseConnection;
@@ -259,6 +260,31 @@ public class MainActivity extends AppCompatActivity{
             @Override
             public void onResponse(Response<Usuario> response, Retrofit retrofit) {
                 System.out.println("Exito al crear el usuario");
+                dameUsuario();
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                System.out.println("Error al crear el usuario: "+t.getMessage());
+            }
+        });
+    }
+
+    private void dameUsuario() {
+       /* Usuario current_user = new Usuario(us.getId(), nombre, apellidos, email, idface, authToken);
+        ((Application_vars) getApplication()).setUsuario(current_user);*/
+        Retrofit retrofit1 = new Retrofit.Builder()
+                .baseUrl(IRetrofit.ENDPOINT)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        retrofit1.create(IRetrofit.class).createUser(nombre, apellidos, mail,
+                token_id, id_facebook, foto, sexo, cumpleanos ).enqueue(new Callback<Usuario>() {
+
+            @Override
+            public void onResponse(Response<Usuario> response, Retrofit retrofit) {
+                System.out.println("Exito al crear el usuario");
+                dameUsuario();
             }
 
             @Override

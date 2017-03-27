@@ -8,4 +8,5 @@ import com.ammacias.tectium.Clases.Evento;
 
 public interface ITectium {
     void onClickEvento(Evento e);
+    void onClickFav(Evento e);
 }
