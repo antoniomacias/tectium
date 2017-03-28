@@ -119,15 +119,14 @@ public class MainActivity extends AppCompatActivity{
                         // Get facebook data from login
                         Bundle bFacebookData = getFacebookData(object);
 
-
                         nombre = (String) bFacebookData.get("first_name");
                         apellidos = (String) bFacebookData.get("last_name");
                         mail = (String) bFacebookData.get("email");
                         sexo = (String) bFacebookData.get("gender");
                         cumpleanos = (String) bFacebookData.get("birthday");
 
-                        System.out.println("Nombre: "+nombre+"\nApellidos: "+apellidos+"\nEmail: "+mail
-                                +"\nSexo: "+sexo+"\nCumpleaños: "+cumpleanos);
+                        /*System.out.println("Nombre: "+nombre+"\nApellidos: "+apellidos+"\nEmail: "+mail
+                                +"\nSexo: "+sexo+"\nCumpleaños: "+cumpleanos);*/
 
 
                         String idSharedPreferences = "";
@@ -138,21 +137,11 @@ public class MainActivity extends AppCompatActivity{
                         System.out.println("El id que acaba de devolver Facebook es: "+id_facebook);
 
                         //TODO: Hago lo mismo en la primera como en el cualquier vez :S
-                        //Primera vez
+
                         if (idSharedPreferences.equals("N") || id_facebook.equals("")) {
                             System.out.println("*****************************\n****************************\nLOGIN POR PRIMERA VEZ");
 
-
-                            //Busco que no exista
-                            //TODO: Petición retrofit que devuelve si existe el registro con id_facebook
-
-                            //boolean bandera = peticion
-
-
-                            //Si no existe: Creo al usuario
-                            if (!usuarioExiste()){
-                                crearUsuario();
-                            }
+                            usuarioExiste();
 
                             //Creo el ID de las SharedPreferences
                             settings = getSharedPreferences("PREFS_FACEBOOK", 0);
@@ -160,18 +149,10 @@ public class MainActivity extends AppCompatActivity{
                             editor.putString("ID_FACEBOOK", id_facebook);
                             editor.commit();
                         }else{
-
                             System.out.println("No es la primera vez");
-                            //TODO: Si el id de SharedPrefs != id_facebook
-                            //TODO: Petición retrofit que devuelve si existe el registro con id_facebook
 
                             //Si no existe: Creo al usuario
-                            if (!usuarioExiste()){
-                                System.out.println("Usuario no existe");
-                                crearUsuario();
-                            }else{
-                                System.out.println("Usuario existe");
-                            }
+                            usuarioExiste();
 
                             settings = getSharedPreferences("PREFS_FACEBOOK", 0);
                             SharedPreferences.Editor editor = settings.edit();
@@ -277,6 +258,7 @@ public class MainActivity extends AppCompatActivity{
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
+        System.out.println(token_id + "DE FACEBOOK POR EL Q BUSCO");
         retrofit1.create(IRetrofit.class).getUsuarioToken(token_id).enqueue(new Callback<Usuario>() {
 
             @Override
@@ -288,33 +270,44 @@ public class MainActivity extends AppCompatActivity{
                                 response.body().getIdFacebook(), response.body().getFoto(), response.body().getSexo(),
                                 response.body().getCumpleanos(), response.body().getAdmin());
                         ((Application_vars) getApplication()).setUsuario(current_user);
+                        System.out.println("Dame usuario method: "+current_user);
                     }
                 }
             }
 
             @Override
             public void onFailure(Throwable t) {
-                System.out.println("Error al crear el usuario: "+t.getMessage());
+                System.out.println("Error al dar el usuario: "+t.getMessage());
             }
         });
     }
 
-    public boolean usuarioExiste(){
+    public void usuarioExiste(){
         Retrofit retrofit1 = new Retrofit.Builder()
                 .baseUrl(IRetrofit.ENDPOINT)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
-        retrofit1.create(IRetrofit.class).getUsuario(id_facebook).enqueue(new Callback<Usuario>() {
+        System.out.println(token_id + "usuarioExiste");
+        retrofit1.create(IRetrofit.class).getUsuarioToken(token_id).enqueue(new Callback<Usuario>() {
 
             @Override
             public void onResponse(Response<Usuario> response, Retrofit retrofit) {
                 if (response.isSuccess()){
-                    bandera = true;
-                    System.out.println("Existe el usuario");
+                   if (response.body().getIdFacebook()!=null){
+                       Usuario current_user = new Usuario(response.body().getId(), response.body().getNombre(),
+                               response.body().getApellidos(),response.body().getMail(), response.body().getTokenId(),
+                               response.body().getIdFacebook(), response.body().getFoto(), response.body().getSexo(),
+                               response.body().getCumpleanos(), response.body().getAdmin());
+                       ((Application_vars) getApplication()).setUsuario(current_user);
+                       System.out.println("Usuario existe method: "+current_user);
+                   }else{
+                       System.out.println("Usuario no existe method");
+                       crearUsuario();
+                   }
+
                 }else{
-                    System.out.println("NO existe el usuario");
-                    bandera = false;
+
                 }
             }
 
@@ -323,7 +316,6 @@ public class MainActivity extends AppCompatActivity{
                 System.out.println("Error: "+t.getMessage());
             }
         });
-        return bandera;
     }
 
     public void getCategorias() {

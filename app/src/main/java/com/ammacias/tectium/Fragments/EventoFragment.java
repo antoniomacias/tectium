@@ -1,6 +1,8 @@
 package com.ammacias.tectium.Fragments;
 
 import android.content.Context;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
@@ -15,6 +17,7 @@ import com.ammacias.tectium.Clases.Eventos;
 import com.ammacias.tectium.Interfaces.IRetrofit;
 import com.ammacias.tectium.Interfaces.ITectium;
 import com.ammacias.tectium.R;
+import com.ammacias.tectium.Utils.GPSTracker;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -39,6 +42,9 @@ public class EventoFragment extends Fragment {
     private int mColumnCount = 1;
     private ITectium mListener;
     RecyclerView recyclerView;
+    GPSTracker gps;
+    double latitude = 0, longitude = 0;
+    List<Address> myList;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -70,6 +76,37 @@ public class EventoFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_evento_list, container, false);
+
+        gps = new GPSTracker(getActivity());
+
+        if(gps.isCanGetLocation()){
+            latitude = gps.getLatitude();
+            longitude = gps.getLongitude();
+            System.out.println("Latitud: "+latitude + "longitud: "+longitude);
+            Geocoder myLocation = new Geocoder(getContext());
+            try {
+                myList = myLocation.getFromLocation(37.4252347, -6.1679995, 1);
+            }
+            catch (Exception e) {
+                e.printStackTrace();
+            }
+            if(myList != null) {
+                try {
+                    System.out.println("ESTOY EN; "+myList.get(0).getCountryName());
+                    System.out.println("ESTOY EN; "+myList.get(0).getLocality());
+                    System.out.println("ESTOY EN; "+myList.get(0).getAddressLine(0));
+                    System.out.println("ESTOY EN; "+myList.get(0).getAdminArea());
+                    System.out.println("ESTOY EN; "+myList.get(0).getPremises());
+                    System.out.println("ESTOY EN; "+myList.get(0).getExtras());
+                    System.out.println("ESTOY EN; "+myList.get(0).getLocale());
+                    System.out.println("ESTOY EN; "+myList.get(0).getThoroughfare());
+
+                }catch (Exception e){}
+            }
+
+        }else{
+            gps.showSettingsAlert();
+        }
 
         // Set the adapter
         if (view instanceof RecyclerView) {

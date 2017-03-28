@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.ammacias.tectium">
 
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
 
     <application
@@ -28,7 +30,8 @@
             android:value="@string/facebook_app_id" />
 
         <activity android:name=".ListaInfinitaActivity" />
-        <activity android:name=".Detalle.DetalleEventoActivity"></activity>
+        <activity android:name=".Detalle.DetalleEventoActivity" />
+        <activity android:name=".NewEventoActivity"></activity>
     </application>
 
 </manifest>

@@ -54,6 +54,13 @@ public interface IRetrofit {
     Call<Example> editarFavEventoUsuario(@Field("id_usuario") String id_usuario, @Field("id_evento") String id_evento,
                                  @Field("fav") String fav);
 
-    @GET("usuario/{idtoken}")
+    @GET("usuariotoken/{idtoken}")
     Call<Usuario> getUsuarioToken(@Path("idtoken") String idtoken);
+
+    //Crear un Evento
+    @FormUrlEncoded
+    @POST("evento")
+    Call<Example> crearEvento(@Field("nombre") String nombre, @Field("sitio") String sitio,
+                              @Field("descripcion") String descripcion, @Field("fecha") String fecha,
+                              @Field("foto") String foto, @Field("precio") String precio,@Field("id_creador") String id_creador);
 }

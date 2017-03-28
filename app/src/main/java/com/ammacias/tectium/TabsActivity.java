@@ -1,11 +1,13 @@
 package com.ammacias.tectium;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 
 import com.ammacias.tectium.Clases.Evento;
@@ -177,5 +179,10 @@ public class TabsActivity extends AppCompatActivity implements ITectium{
                 System.out.println("Error al favear el evento: "+t.getMessage());
             }
         });
+    }
+
+    public void addEvento(View view) {
+        Intent i = new Intent(this, NewEventoActivity.class);
+        startActivity(i);
     }
 }
