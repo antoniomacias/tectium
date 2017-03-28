@@ -8,18 +8,18 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.TextView;
 
 import com.ammacias.tectium.Clases.Evento;
 import com.ammacias.tectium.Clases.Evento_usuario;
-import com.ammacias.tectium.Clases.Eventos_usuarios;
 import com.ammacias.tectium.Clases.Example;
-import com.ammacias.tectium.Clases.Usuario;
-import com.ammacias.tectium.Fragments.EventoFragment;
-import com.ammacias.tectium.Fragments.ListaEventosFragment;
+import com.ammacias.tectium.Fragments.DetalleEventoFragment;
+import com.ammacias.tectium.Recycler.EventoFragment;
 import com.ammacias.tectium.Interfaces.IRetrofit;
 import com.ammacias.tectium.Interfaces.ITectium;
+import com.ammacias.tectium.Recycler.OwnEventFragment;
 import com.ammacias.tectium.Utils.Application_vars;
+
+import org.parceler.Parcels;
 
 import retrofit.Callback;
 import retrofit.GsonConverterFactory;
@@ -48,16 +48,16 @@ public class TabsActivity extends AppCompatActivity implements ITectium{
                             .commit();
                     return true;
                 case R.id.navigation_dashboard:
-                    /*f = new RespuestaFragment();
+                    f = new OwnEventFragment();
                     getSupportFragmentManager().beginTransaction()
                             .replace(R.id.content, f)
-                            .commit();*/
+                            .commit();
                     return true;
                 case R.id.navigation_notifications:
-                    /*f = new ConfigFragment();
+                    f = new OwnEventFragment();
                     getSupportFragmentManager().beginTransaction()
                             .replace(R.id.content, f)
-                            .commit();*/
+                            .commit();
                     return true;
             }
             return false;
@@ -83,6 +83,18 @@ public class TabsActivity extends AppCompatActivity implements ITectium{
     @Override
     public void onClickEvento(Evento e) {
         System.out.println("Evento: "+e.toString());
+    }
+
+    @Override
+    public void onClickOwnEvento(Evento e) {
+        f = new DetalleEventoFragment();
+        Bundle args = new Bundle();
+        args.putParcelable("evento", Parcels.wrap(e));
+        f.setArguments(args);
+
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.content, f)
+                .commit();
     }
 
     @Override
@@ -142,9 +154,7 @@ public class TabsActivity extends AppCompatActivity implements ITectium{
             @Override
             public void onResponse(Response<Example> response, Retrofit retrofit) {
                 if (response.isSuccess()){
-
                     System.out.println("Exito al cambiar de fav el evento");
-
                 }
             }
 

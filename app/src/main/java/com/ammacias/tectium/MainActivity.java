@@ -73,7 +73,6 @@ public class MainActivity extends AppCompatActivity{
 
 
 
-        //TODO: QUITAR CUANDO FUNCIONE EL LOGIN BIEN
         iniciar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -95,8 +94,8 @@ public class MainActivity extends AppCompatActivity{
                     System.out.println("Ya no descargo");
                 }
 
-                Intent i = new Intent(MainActivity.this, TabsActivity.class);
-                startActivity(i);
+                loginPorMail();
+
             }
         });
         // Le damos permisos específicos para almacenar su email. La app le avisará automáticamente.
@@ -174,6 +173,44 @@ public class MainActivity extends AppCompatActivity{
 
             @Override
             public void onError(FacebookException e) {}
+        });
+    }
+
+    private void loginPorMail() {
+        Retrofit retrofit1 = new Retrofit.Builder()
+                .baseUrl(IRetrofit.ENDPOINT)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        System.out.println("Mail que busco: "+user.getText().toString());
+        retrofit1.create(IRetrofit.class).getUsuarioMail(user.getText().toString()).enqueue(new Callback<Usuario>() {
+
+            @Override
+            public void onResponse(Response<Usuario> response, Retrofit retrofit) {
+               if (response.isSuccess()){
+                   if(response.body().getId()!= null){
+                       Usuario current_user = new Usuario(response.body().getId(), response.body().getNombre(),
+                               response.body().getApellidos(),response.body().getMail(), response.body().getTokenId(),
+                               response.body().getIdFacebook(), response.body().getFoto(), response.body().getSexo(),
+                               response.body().getCumpleanos(), response.body().getAdmin());
+                       ((Application_vars) getApplication()).setUsuario(current_user);
+                       System.out.println("Loginmail method: "+current_user);
+                       Intent i = new Intent(MainActivity.this, TabsActivity.class);
+                       startActivity(i);
+                   }else{
+                       System.out.println(response.body());
+                       System.out.println("No hay ese correo en loginmail");
+                   }
+               }else{
+                   System.out.println("No hay success en loginmail");
+               }
+
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                System.out.println("Error al crear el usuario: "+t.getMessage());
+            }
         });
     }
 

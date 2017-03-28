@@ -1,4 +1,4 @@
-package com.ammacias.tectium.Fragments;
+package com.ammacias.tectium.Recycler;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -14,16 +14,16 @@ import com.ammacias.tectium.R;
 import java.util.List;
 
 /**
- * {@link RecyclerView.Adapter} that can display a {@link com.ammacias.tectium.Clases.Evento} and makes a call to the
- * specified {@link ITectium}.
+ * {@link RecyclerView.Adapter} that can display a {@link Evento} and makes a call to the
+ * specified {@link com.ammacias.tectium.Interfaces.ITectium}.
  * TODO: Replace the implementation with code for your data type.
  */
-public class MyEventoRecyclerViewAdapter extends RecyclerView.Adapter<MyEventoRecyclerViewAdapter.ViewHolder> {
+public class MyOwnEventRecyclerViewAdapter extends RecyclerView.Adapter<MyOwnEventRecyclerViewAdapter.ViewHolder> {
 
     private final List<Evento> mValues;
     private final ITectium mListener;
 
-    public MyEventoRecyclerViewAdapter(List<Evento> items, ITectium listener) {
+    public MyOwnEventRecyclerViewAdapter(List<Evento> items, ITectium listener) {
         mValues = items;
         mListener = listener;
     }
@@ -31,7 +31,7 @@ public class MyEventoRecyclerViewAdapter extends RecyclerView.Adapter<MyEventoRe
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.fragment_evento_item, parent, false);
+                .inflate(R.layout.fragment_ownevent_item, parent, false);
         return new ViewHolder(view);
     }
 
@@ -52,15 +52,8 @@ public class MyEventoRecyclerViewAdapter extends RecyclerView.Adapter<MyEventoRe
                 if (null != mListener) {
                     // Notify the active callbacks interface (the activity, if the
                     // fragment is attached to one) that an item has been selected.
-                    mListener.onClickEvento(holder.mItem);
+                    mListener.onClickOwnEvento(holder.mItem);
                 }
-            }
-        });
-
-        holder.fav.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mListener.onClickFav(holder.mItem);
             }
         });
     }
@@ -79,9 +72,9 @@ public class MyEventoRecyclerViewAdapter extends RecyclerView.Adapter<MyEventoRe
         public final TextView descripcion;
         public final ImageView foto;
         public final ImageView fav;/**
-        public final ImageView compartir;
-        public final ImageView img_fecha;
-        public final ImageView img_precio;*/
+         public final ImageView compartir;
+         public final ImageView img_fecha;
+         public final ImageView img_precio;*/
         public Evento mItem;
 
         public ViewHolder(View view) {
@@ -99,8 +92,6 @@ public class MyEventoRecyclerViewAdapter extends RecyclerView.Adapter<MyEventoRe
             compartir = (ImageView) view.findViewById(R.id.compartir);
             img_fecha = (ImageView) view.findViewById(R.id.img_fecha);
             img_precio = (ImageView) view.findViewById(R.id.img_precio);*/
-
-
         }
 
         @Override

@@ -3,6 +3,7 @@ package com.ammacias.tectium.Interfaces;
 import com.ammacias.tectium.Clases.Categorias;
 import com.ammacias.tectium.Clases.Evento_usuario;
 import com.ammacias.tectium.Clases.Eventos;
+import com.ammacias.tectium.Clases.Eventos_categorias;
 import com.ammacias.tectium.Clases.Eventos_usuarios;
 import com.ammacias.tectium.Clases.Example;
 import com.ammacias.tectium.Clases.Usuario;
@@ -35,6 +36,10 @@ public interface IRetrofit {
     @GET("eventos")
     Call<Eventos> getFullEvents();
 
+    //GET eventos por idUser
+    @GET("eventosOwn/{id}")
+    Call<Eventos> getOwnEvents(@Path("id") String id);
+
     @GET("categorias")
     Call<Categorias> getCategorias();
 
@@ -54,8 +59,13 @@ public interface IRetrofit {
     Call<Example> editarFavEventoUsuario(@Field("id_usuario") String id_usuario, @Field("id_evento") String id_evento,
                                  @Field("fav") String fav);
 
+    //Usuario por token
     @GET("usuariotoken/{idtoken}")
     Call<Usuario> getUsuarioToken(@Path("idtoken") String idtoken);
+
+    //Login mail usuario
+    @GET("usuariomail/{mail}")
+    Call<Usuario> getUsuarioMail(@Path("mail") String mail);
 
     //Crear un Evento
     @FormUrlEncoded
@@ -63,4 +73,10 @@ public interface IRetrofit {
     Call<Example> crearEvento(@Field("nombre") String nombre, @Field("sitio") String sitio,
                               @Field("descripcion") String descripcion, @Field("fecha") String fecha,
                               @Field("foto") String foto, @Field("precio") String precio,@Field("id_creador") String id_creador);
+
+    //Categorias de un evento
+    @GET("evento_categoriacat/{id}")
+    Call<Eventos_categorias> getCatFromEvent(@Path("id") String id);
+
+
 }

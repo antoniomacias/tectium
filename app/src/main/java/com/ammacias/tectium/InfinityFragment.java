@@ -1,13 +1,14 @@
 package com.ammacias.tectium;
 
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v4.app.Fragment;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.ammacias.tectium.Utils.MyInfiniteListAdapter;
@@ -15,8 +16,11 @@ import com.softw4re.views.InfiniteListView;
 
 import java.util.ArrayList;
 
-public class ListaInfinitaActivity extends AppCompatActivity {
 
+/**
+ * A simple {@link Fragment} subclass.
+ */
+public class InfinityFragment extends Fragment {
     private final int ITEM_COUNT_TO_LOAD = 5;
     private final int ITEM_COUNT_LIMIT = 15;
     private final int TIME_TO_LOAD = 1500; //in ms
@@ -29,20 +33,28 @@ public class ListaInfinitaActivity extends AppCompatActivity {
     private ArrayList<String> itemList;
     private MyInfiniteListAdapter<String> adapter;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_lista_infinita);
+    public InfinityFragment() {
+        // Required empty public constructor
+    }
 
-        container = (LinearLayout) findViewById(R.id.container);
-        infiniteListView = (InfiniteListView) findViewById(R.id.infiniteListView);
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        View v = inflater.inflate(R.layout.activity_lista_infinita, container, false);
+
+        container = (LinearLayout) v.findViewById(R.id.container);
+        infiniteListView = (InfiniteListView) v.findViewById(R.id.infiniteListView);
 
         itemList = new ArrayList<>();
-        //adapter = new MyInfiniteListAdapter(this, R.layout.fragment_evento_item, itemList);
+        //adapter = new MyInfiniteListAdapter(getActivity(), R.layout.fragment_evento_item, itemList);
 
         infiniteListView.setAdapter(adapter);
 
         loadNewItems();
+
+        return v;
     }
 
     //SIMULATES ITEM LOADING

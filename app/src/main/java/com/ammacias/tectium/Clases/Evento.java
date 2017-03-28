@@ -3,32 +3,48 @@ package com.ammacias.tectium.Clases;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import org.parceler.Parcel;
+
 /**
  * Created by macias on 21/03/2017.
  */
-
+@Parcel
 public class Evento {
     @SerializedName("id")
     @Expose
-    private String id;
+    String id;
     @SerializedName("nombre")
     @Expose
-    private String nombre;
+    String nombre;
     @SerializedName("sitio")
     @Expose
-    private String sitio;
+    String sitio;
     @SerializedName("descripcion")
     @Expose
-    private String descripcion;
+    String descripcion;
     @SerializedName("fecha")
     @Expose
-    private String fecha;
+    String fecha;
     @SerializedName("foto")
     @Expose
-    private Object foto;
+    String foto;
     @SerializedName("precio")
     @Expose
-    private String precio;
+    String precio;
+
+
+    public Evento() {
+    }
+
+    public Evento(String id, String nombre, String sitio, String descripcion, String fecha, String foto, String precio) {
+        this.id = id;
+        this.nombre = nombre;
+        this.sitio = sitio;
+        this.descripcion = descripcion;
+        this.fecha = fecha;
+        this.foto = foto;
+        this.precio = precio;
+    }
 
     public String getId() {
         return id;
@@ -70,11 +86,11 @@ public class Evento {
         this.fecha = fecha;
     }
 
-    public Object getFoto() {
+    public String getFoto() {
         return foto;
     }
 
-    public void setFoto(Object foto) {
+    public void setFoto(String foto) {
         this.foto = foto;
     }
 

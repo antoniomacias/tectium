@@ -15,4 +15,11 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="add">Añadir</string>
     <string name="new_event">Crear evento</string>
+    <string name="social">Social</string>
+    <string name="corporativo">Corporativo</string>
+    <string name="publico">Público</string>
+    <string name="religioso">Religioso</string>
+    <string name="cultural">Cultural</string>
+    <string name="empresarial">Empresarial</string>
+    <string name="deportivo">Deportivo</string>
 </resources>
