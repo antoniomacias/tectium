@@ -1,6 +1,7 @@
 package com.ammacias.tectium.Interfaces;
 
 import com.ammacias.tectium.Clases.Categorias;
+import com.ammacias.tectium.Clases.Evento;
 import com.ammacias.tectium.Clases.Evento_usuario;
 import com.ammacias.tectium.Clases.Eventos;
 import com.ammacias.tectium.Clases.Eventos_categorias;
@@ -43,6 +44,10 @@ public interface IRetrofit {
     //GET eventos por idUser
     @GET("eventosOwn/{id}")
     Call<Eventos> getOwnEvents(@Path("id") String id);
+
+    //GET eventos concreto
+    @GET("evento/{id}")
+    Call<Evento> getEvent(@Path("id") String id);
 
     @GET("categorias")
     Call<Categorias> getCategorias();
@@ -103,4 +108,10 @@ public interface IRetrofit {
     //Eliminar un Evento-categoria
     @GET("delete_evento_cat")
     Call<Example> eliminarEventoCategoria(@Query("id_categoria") String id_categoria, @Query("id_evento") String id_evento);
+
+
+    //Get eventos del usuario que ha dado fav
+    @GET("evento_usuario_fav/{id}")
+    Call<Eventos_usuarios> getFavEvents(@Path("id") String id);
+
 }

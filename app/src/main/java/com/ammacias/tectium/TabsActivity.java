@@ -17,6 +17,7 @@ import com.ammacias.tectium.Fragments.NewEventoFragment;
 import com.ammacias.tectium.Recycler.EventoFragment;
 import com.ammacias.tectium.Interfaces.IRetrofit;
 import com.ammacias.tectium.Interfaces.ITectium;
+import com.ammacias.tectium.Recycler.FavFragment;
 import com.ammacias.tectium.Recycler.OwnEventFragment;
 import com.ammacias.tectium.Utils.Application_vars;
 
@@ -49,7 +50,7 @@ public class TabsActivity extends AppCompatActivity implements ITectium{
                             .commit();
                     return true;
                 case R.id.navigation_dashboard:
-                    f = new OwnEventFragment();
+                    f = new FavFragment();
                     getSupportFragmentManager().beginTransaction()
                             .replace(R.id.content, f)
                             .commit();
@@ -118,6 +119,11 @@ public class TabsActivity extends AppCompatActivity implements ITectium{
         sendIntent.setType("text/plain");
         startActivity(Intent.createChooser(sendIntent, "Elige la aplicación a compartir"));
         }
+
+    @Override
+    public void onClickFavoritoRecycler(Evento e) {
+
+    }
 
     private void existeRegistroDelEvento(final String idE) {
         Retrofit retrofit1 = new Retrofit.Builder()
