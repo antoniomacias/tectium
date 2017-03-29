@@ -22,4 +22,6 @@
     <string name="cultural">Cultural</string>
     <string name="empresarial">Empresarial</string>
     <string name="deportivo">Deportivo</string>
+    <string name="edit">Editar</string>
+    <string name="addTag">Añadir</string>
 </resources>

@@ -82,8 +82,25 @@ public interface IRetrofit {
     @GET("evento_categoriacat/{id}")
     Call<Eventos_categorias> getCatFromEvent(@Path("id") String id);
 
-    @Multipart
+    /*@Multipart
     @POST("/uploadPhoto")
     Call<User> editUser (@Header("Authorization") String authorization, @Part("file\"; filename=\"pp.png\" ") RequestBody file , @Part("FirstName") RequestBody fname, @Part("Id") RequestBody id);
+*/
 
+    //Editar evento
+    @FormUrlEncoded
+    @POST("evento_edit")
+    Call<Example> editOwnEvent(@Field("nombre") String nombre, @Field("sitio") String sitio,
+                               @Field("descripcion") String descripcion, @Field("fecha") String fecha,
+                               @Field("precio") String precio, @Field("id") String id);
+
+    //Crear una Evento-categoria
+    @FormUrlEncoded
+    @POST("evento_categoria")
+    Call<Example> crearEventoCategoria(@Field("id_categoria") String id_categoria, @Field("id_evento") String id_evento);
+
+
+    //Eliminar un Evento-categoria
+    @GET("delete_evento_cat")
+    Call<Example> eliminarEventoCategoria(@Query("id_categoria") String id_categoria, @Query("id_evento") String id_evento);
 }

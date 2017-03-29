@@ -21,10 +21,12 @@ import android.app.AlertDialog;
 import com.ammacias.tectium.Clases.Evento;
 import com.ammacias.tectium.Clases.Evento_categoria;
 import com.ammacias.tectium.Clases.Eventos_categorias;
+import com.ammacias.tectium.Clases.Example;
 import com.ammacias.tectium.Clases.Usuario;
 import com.ammacias.tectium.Interfaces.IRetrofit;
 import com.ammacias.tectium.MainActivity;
 import com.ammacias.tectium.R;
+import com.ammacias.tectium.Recycler.OwnEventFragment;
 import com.ammacias.tectium.TabsActivity;
 import com.ammacias.tectium.Utils.Application_vars;
 import com.ammacias.tectium.localdb.CategoriaDB;
@@ -61,6 +63,10 @@ public class DetalleEventoFragment extends Fragment {
     Evento evento;
     List<String> list2;
 
+
+    //Edit
+    EditText nombre, sitio, descripcion,fecha, precio;
+    Button btn_edit;
     public DetalleEventoFragment() {
         // Required empty public constructor
     }
@@ -74,6 +80,28 @@ public class DetalleEventoFragment extends Fragment {
 
         Bundle extras = getArguments();
         evento = (Evento) Parcels.unwrap(extras.getParcelable("evento"));
+
+        nombre = (EditText)v.findViewById(R.id.nombre);
+        sitio = (EditText)v.findViewById(R.id.sitio);
+        descripcion = (EditText)v.findViewById(R.id.descripcion);
+        fecha = (EditText)v.findViewById(R.id.fecha);
+        precio = (EditText)v.findViewById(R.id.precio);
+        btn_edit = (Button)v.findViewById(R.id.btn_edit);
+
+
+        nombre.setText(evento.getNombre());
+        sitio.setText(evento.getSitio());
+        descripcion.setText(evento.getDescripcion());
+        fecha.setText(evento.getFecha());
+        precio.setText(evento.getPrecio());
+
+        btn_edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                editarOwnEvent();
+            }
+        });
+
 
         text_tag = (Spinner)v.findViewById(R.id.text_tag);
 
@@ -89,8 +117,8 @@ public class DetalleEventoFragment extends Fragment {
         mTagContainerLayout1.setOnTagClickListener(new TagView.OnTagClickListener() {
             @Override
             public void onTagClick(int position, String text) {
-                Toast.makeText(getActivity(), "click-position:" + position + ", text:" + text,
-                        Toast.LENGTH_SHORT).show();
+                /*Toast.makeText(getActivity(), "click-position:" + position + ", text:" + text,
+                        Toast.LENGTH_SHORT).show();*/
             }
 
             @Override
@@ -101,6 +129,7 @@ public class DetalleEventoFragment extends Fragment {
                         .setPositiveButton("Eliminar", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
+                                deleteTagFromEvent(text);
                                 spinnerArray.add(text);
                                 mTagContainerLayout1.removeTag(position);
                             }
@@ -118,8 +147,8 @@ public class DetalleEventoFragment extends Fragment {
             @Override
             public void onTagCrossClick(int position) {
 //                mTagContainerLayout1.removeTag(position);
-                Toast.makeText(getActivity(), "Click TagView cross! position = " + position,
-                        Toast.LENGTH_SHORT).show();
+                /*Toast.makeText(getActivity(), "Click TagView cross! position = " + position,
+                        Toast.LENGTH_SHORT).show();*/
             }
         });
 
@@ -134,6 +163,9 @@ public class DetalleEventoFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 mTagContainerLayout1.addTag(text_tag.getSelectedItem().toString());
+
+                addTagToEvent(text_tag.getSelectedItem().toString());
+
                 spinnerArray.remove(text_tag.getSelectedItem().toString());
                 text_tag.setSelection(0,true);
                 // Add tag in the specified position
@@ -141,6 +173,115 @@ public class DetalleEventoFragment extends Fragment {
             }
         });
         return v;
+    }
+
+    private void deleteTagFromEvent(String text) {
+        CategoriaDBDao categoriaDBDao = DatabaseConnection.getCategoriaDBDao(getActivity());
+        List<CategoriaDB> categoriaDB = categoriaDBDao.loadAll();
+        String id_tag = "";
+
+        for (CategoriaDB c :categoriaDB) {
+            if (c.getNombre().equalsIgnoreCase(text)){
+                id_tag = String.valueOf(c.getId());
+            }
+        }
+
+
+
+        Retrofit retrofit1 = new Retrofit.Builder()
+                .baseUrl(IRetrofit.ENDPOINT)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        System.out.println("El tag a eliminar es: "+id_tag +" en "+evento.getId());
+        retrofit1.create(IRetrofit.class).eliminarEventoCategoria(id_tag, evento.getId()).enqueue(new Callback<Example>() {
+
+            @Override
+            public void onResponse(Response<Example> response, Retrofit retrofit) {
+                if (response.isSuccess()){
+                    if (response.body().getStatus().equalsIgnoreCase("success")){
+                        System.out.println("Tag eliminado");
+
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                System.out.println("Error al eliminar tag: "+t.getMessage());
+            }
+        });
+    }
+
+    private void addTagToEvent(String taG_name) {
+        CategoriaDBDao categoriaDBDao = DatabaseConnection.getCategoriaDBDao(getActivity());
+        List<CategoriaDB> categoriaDB = categoriaDBDao.loadAll();
+        String id_tag = "";
+
+        for (CategoriaDB c :categoriaDB) {
+            if (c.getNombre().equalsIgnoreCase(taG_name)){
+                id_tag = String.valueOf(c.getId());
+            }
+        }
+
+
+        Retrofit retrofit1 = new Retrofit.Builder()
+                .baseUrl(IRetrofit.ENDPOINT)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        System.out.println("El tag a añadir es: "+id_tag +" en "+evento.getId());
+        retrofit1.create(IRetrofit.class).crearEventoCategoria(id_tag, evento.getId()).enqueue(new Callback<Example>() {
+
+            @Override
+            public void onResponse(Response<Example> response, Retrofit retrofit) {
+                if (response.isSuccess()){
+                    if (response.body().getStatus().equalsIgnoreCase("success")){
+                        System.out.println("Tag editado");
+
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                System.out.println("Error al crear el tag: "+t.getMessage());
+            }
+        });
+    }
+
+    private void editarOwnEvent() {
+        Retrofit retrofit1 = new Retrofit.Builder()
+                .baseUrl(IRetrofit.ENDPOINT)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        if (precio.getText().toString().equals("0")){
+            precio.setText("Gratis");
+        }
+
+        retrofit1.create(IRetrofit.class).editOwnEvent(nombre.getText().toString(),sitio.getText().toString(),
+                descripcion.getText().toString(), fecha.getText().toString(),precio.getText().toString(), evento.getId()).enqueue(new Callback<Example>() {
+
+            @Override
+            public void onResponse(Response<Example> response, Retrofit retrofit) {
+                if (response.isSuccess()){
+                    if (response.body().getStatus().equalsIgnoreCase("success")){
+                        System.out.println("Evento editado");
+                        Fragment f = new OwnEventFragment();
+
+                        getActivity().getSupportFragmentManager().beginTransaction()
+                                .replace(R.id.content, f)
+                                .commit();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Throwable t) {
+                System.out.println("Error al dar el usuario: "+t.getMessage());
+            }
+        });
     }
 
     private void datosSpinner() {

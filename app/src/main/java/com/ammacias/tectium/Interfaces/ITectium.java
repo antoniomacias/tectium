@@ -10,4 +10,5 @@ public interface ITectium {
     void onClickEvento(Evento e);
     void onClickOwnEvento(Evento e);
     void onClickFav(Evento e);
+    void onClickShare(Evento e);
 }

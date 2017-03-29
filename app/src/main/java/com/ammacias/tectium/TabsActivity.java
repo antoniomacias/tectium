@@ -106,6 +106,19 @@ public class TabsActivity extends AppCompatActivity implements ITectium{
 
     }
 
+    @Override
+    public void onClickShare(Evento e) {
+        Intent sendIntent = new Intent();
+        sendIntent.setAction(Intent.ACTION_SEND);
+        sendIntent.putExtra(Intent.EXTRA_SUBJECT, "Tectium");
+        sendIntent.putExtra(Intent.EXTRA_TEXT, "El usuario "+ ((Application_vars) getApplication()).getUsuario().getNombre()
+                +" "+ ((Application_vars) getApplication()).getUsuario().getApellidos()+" ha compartido un evento.\n"
+        + "Has sido invitado al evento " + e.getNombre()+ " celebrado el "+e.getFecha()+" en " + e.getSitio()+"\n."
+        + e.getDescripcion()+".\nEl precio es de + "+e.getPrecio()+".\nEsperamos verte!!");
+        sendIntent.setType("text/plain");
+        startActivity(Intent.createChooser(sendIntent, "Elige la aplicación a compartir"));
+        }
+
     private void existeRegistroDelEvento(final String idE) {
         Retrofit retrofit1 = new Retrofit.Builder()
                 .baseUrl(IRetrofit.ENDPOINT)

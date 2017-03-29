@@ -63,6 +63,13 @@ public class MyEventoRecyclerViewAdapter extends RecyclerView.Adapter<MyEventoRe
                 mListener.onClickFav(holder.mItem);
             }
         });
+
+        holder.compartir.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mListener.onClickShare(holder.mItem);
+            }
+        });
     }
 
     @Override
@@ -78,8 +85,8 @@ public class MyEventoRecyclerViewAdapter extends RecyclerView.Adapter<MyEventoRe
         public final TextView precio;
         public final TextView descripcion;
         public final ImageView foto;
-        public final ImageView fav;/**
-        public final ImageView compartir;
+        public final ImageView fav;
+        public final ImageView compartir;/**
         public final ImageView img_fecha;
         public final ImageView img_precio;*/
         public Evento mItem;
@@ -95,8 +102,8 @@ public class MyEventoRecyclerViewAdapter extends RecyclerView.Adapter<MyEventoRe
             descripcion = (TextView) view.findViewById(R.id.descripcion);
 
             foto = (ImageView) view.findViewById(R.id.fotoEvento);
-            fav = (ImageView) view.findViewById(R.id.fav);/*
-            compartir = (ImageView) view.findViewById(R.id.compartir);
+            fav = (ImageView) view.findViewById(R.id.fav);
+            compartir = (ImageView) view.findViewById(R.id.compartir);/*
             img_fecha = (ImageView) view.findViewById(R.id.img_fecha);
             img_precio = (ImageView) view.findViewById(R.id.img_precio);*/
 
