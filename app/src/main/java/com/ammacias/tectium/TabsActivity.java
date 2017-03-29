@@ -13,6 +13,7 @@ import com.ammacias.tectium.Clases.Evento;
 import com.ammacias.tectium.Clases.Evento_usuario;
 import com.ammacias.tectium.Clases.Example;
 import com.ammacias.tectium.Fragments.DetalleEventoFragment;
+import com.ammacias.tectium.Fragments.NewEventoFragment;
 import com.ammacias.tectium.Recycler.EventoFragment;
 import com.ammacias.tectium.Interfaces.IRetrofit;
 import com.ammacias.tectium.Interfaces.ITectium;
@@ -192,7 +193,13 @@ public class TabsActivity extends AppCompatActivity implements ITectium{
     }
 
     public void addEvento(View view) {
-        Intent i = new Intent(this, NewEventoActivity.class);
-        startActivity(i);
+        f = new NewEventoFragment();
+        /*Bundle args = new Bundle();
+        args.putParcelable("evento", Parcels.wrap(e));
+        f.setArguments(args);*/
+
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.content, f)
+                .commit();
     }
 }

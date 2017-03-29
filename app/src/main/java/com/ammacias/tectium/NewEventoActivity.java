@@ -1,5 +1,6 @@
 package com.ammacias.tectium;
 
+import android.Manifest;
 import android.content.DialogInterface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -13,6 +14,7 @@ import com.ammacias.tectium.Clases.Example;
 import com.ammacias.tectium.Clases.Usuario;
 import com.ammacias.tectium.Interfaces.IRetrofit;
 import com.ammacias.tectium.Utils.Application_vars;
+import com.frosquivel.magicalcamera.MagicalPermissions;
 
 import retrofit.Callback;
 import retrofit.GsonConverterFactory;
@@ -20,6 +22,9 @@ import retrofit.Response;
 import retrofit.Retrofit;
 
 public class NewEventoActivity extends AppCompatActivity {
+
+    //Camera
+    private MagicalPermissions magicalPermissions;
 
     final String[] curDate = new String[1];
     CalendarView calendarView;
@@ -34,6 +39,15 @@ public class NewEventoActivity extends AppCompatActivity {
         precio = (EditText)findViewById(R.id.precio);
         dateEvento = (EditText)findViewById(R.id.dateEvento);
         timeEvento = (EditText)findViewById(R.id.timeEvento);
+
+        String[] permissions = new String[] {
+                Manifest.permission.CAMERA,
+                Manifest.permission.READ_EXTERNAL_STORAGE,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                Manifest.permission.ACCESS_COARSE_LOCATION,
+                Manifest.permission.ACCESS_FINE_LOCATION
+        };
+        magicalPermissions = new MagicalPermissions(this, permissions);
     }
 
     public void chooseDateTime(View view) {

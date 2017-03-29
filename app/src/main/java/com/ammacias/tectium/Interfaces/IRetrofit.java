@@ -7,12 +7,16 @@ import com.ammacias.tectium.Clases.Eventos_categorias;
 import com.ammacias.tectium.Clases.Eventos_usuarios;
 import com.ammacias.tectium.Clases.Example;
 import com.ammacias.tectium.Clases.Usuario;
+import com.squareup.okhttp.RequestBody;
 
 import retrofit.Call;
 import retrofit.http.Field;
 import retrofit.http.FormUrlEncoded;
 import retrofit.http.GET;
+import retrofit.http.Header;
+import retrofit.http.Multipart;
 import retrofit.http.POST;
+import retrofit.http.Part;
 import retrofit.http.Path;
 import retrofit.http.Query;
 
@@ -78,5 +82,8 @@ public interface IRetrofit {
     @GET("evento_categoriacat/{id}")
     Call<Eventos_categorias> getCatFromEvent(@Path("id") String id);
 
+    @Multipart
+    @POST("/uploadPhoto")
+    Call<User> editUser (@Header("Authorization") String authorization, @Part("file\"; filename=\"pp.png\" ") RequestBody file , @Part("FirstName") RequestBody fname, @Part("Id") RequestBody id);
 
 }

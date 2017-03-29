@@ -7,6 +7,13 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="com.ammacias.tectium.TabsActivity">
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        app:srcCompat="@android:drawable/btn_plus"
+        android:onClick="addEvento"/>
 
     <FrameLayout
         android:id="@+id/content"
@@ -26,14 +33,6 @@
 
     </FrameLayout>
 
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        app:srcCompat="@android:drawable/btn_plus"
-        android:onClick="addEvento"/>
 
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/navigation"
