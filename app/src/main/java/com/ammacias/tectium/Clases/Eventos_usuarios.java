@@ -10,9 +10,20 @@ import java.util.List;
  */
 
 public class Eventos_usuarios {
+    @SerializedName("status")
+    @Expose
+    private String status;
     @SerializedName("data")
     @Expose
     private List<Evento_usuario> data = null;
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 
     public List<Evento_usuario> getData() {
         return data;

@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.ammacias.tectium.Clases.Evento;
+import com.ammacias.tectium.Clases.Evento_usuario;
 import com.ammacias.tectium.Interfaces.ITectium;
 import com.ammacias.tectium.R;
 
@@ -20,10 +21,10 @@ import java.util.List;
  */
 public class MyFavRecyclerViewAdapter extends RecyclerView.Adapter<MyFavRecyclerViewAdapter.ViewHolder> {
 
-    private final List<Evento> mValues;
+    private final List<Evento_usuario> mValues;
     private final ITectium mListener;
 
-    public MyFavRecyclerViewAdapter(List<Evento> items, ITectium listener) {
+    public MyFavRecyclerViewAdapter(List<Evento_usuario> items, ITectium listener) {
         mValues = items;
         mListener = listener;
     }
@@ -72,7 +73,7 @@ public class MyFavRecyclerViewAdapter extends RecyclerView.Adapter<MyFavRecycler
         public final ImageView compartir;/**
          public final ImageView img_fecha;
          public final ImageView img_precio;*/
-        public Evento mItem;
+        public Evento_usuario mItem;
 
         public ViewHolder(View view) {
             super(view);

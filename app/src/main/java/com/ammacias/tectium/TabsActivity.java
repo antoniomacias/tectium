@@ -121,7 +121,7 @@ public class TabsActivity extends AppCompatActivity implements ITectium{
         }
 
     @Override
-    public void onClickFavoritoRecycler(Evento e) {
+    public void onClickFavoritoRecycler(Evento_usuario e) {
 
     }
 
@@ -137,9 +137,9 @@ public class TabsActivity extends AppCompatActivity implements ITectium{
             @Override
             public void onResponse(Response<Evento_usuario> response, Retrofit retrofit) {
                 if (response.isSuccess()){
-                    System.out.println(response.body().getIdEvento());
+                    System.out.println(response.body().getId());
                     System.out.println(response.body().getFav());
-                    System.out.println(response.body().getIdUsuario());
+                    System.out.println(response.body().getIdU());
                    if (response.body().getId()!=null){
                        updateEventoUsuario(idE, response.body().getFav());
                    }else{

@@ -162,12 +162,17 @@ public class DetalleEventoFragment extends Fragment {
         btnAddTag.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mTagContainerLayout1.addTag(text_tag.getSelectedItem().toString());
+                if (spinnerArray.size()!=0){
+                    mTagContainerLayout1.addTag(text_tag.getSelectedItem().toString());
 
-                addTagToEvent(text_tag.getSelectedItem().toString());
+                    addTagToEvent(text_tag.getSelectedItem().toString());
 
-                spinnerArray.remove(text_tag.getSelectedItem().toString());
-                text_tag.setSelection(0,true);
+                    spinnerArray.remove(text_tag.getSelectedItem().toString());
+                    text_tag.setSelection(0,true);
+                }else{
+
+                }
+
                 // Add tag in the specified position
 //                mTagContainerLayout1.addTag(text.getText().toString(), 4);
             }

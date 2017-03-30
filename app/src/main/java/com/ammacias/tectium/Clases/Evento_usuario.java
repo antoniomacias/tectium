@@ -8,21 +8,52 @@ import com.google.gson.annotations.SerializedName;
  */
 
 public class Evento_usuario {
+    @SerializedName("nombre")
+    @Expose
+    private String nombre;
+    @SerializedName("idU")
+    @Expose
+    private String idU;
     @SerializedName("id")
     @Expose
     private String id;
-    @SerializedName("id_usuario")
+    @SerializedName("sitio")
     @Expose
-    private String idUsuario;
-    @SerializedName("id_evento")
+    private String sitio;
+    @SerializedName("descripcion")
     @Expose
-    private String idEvento;
+    private String descripcion;
+    @SerializedName("fecha")
+    @Expose
+    private String fecha;
+    @SerializedName("foto")
+    @Expose
+    private Object foto;
+    @SerializedName("precio")
+    @Expose
+    private String precio;
     @SerializedName("fav")
     @Expose
     private String fav;
-    @SerializedName("leido")
+    @SerializedName("idEU")
     @Expose
-    private String leido;
+    private String idEU;
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getIdU() {
+        return idU;
+    }
+
+    public void setIdU(String idU) {
+        this.idU = idU;
+    }
 
     public String getId() {
         return id;
@@ -32,20 +63,44 @@ public class Evento_usuario {
         this.id = id;
     }
 
-    public String getIdUsuario() {
-        return idUsuario;
+    public String getSitio() {
+        return sitio;
     }
 
-    public void setIdUsuario(String idUsuario) {
-        this.idUsuario = idUsuario;
+    public void setSitio(String sitio) {
+        this.sitio = sitio;
     }
 
-    public String getIdEvento() {
-        return idEvento;
+    public String getDescripcion() {
+        return descripcion;
     }
 
-    public void setIdEvento(String idEvento) {
-        this.idEvento = idEvento;
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    public String getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(String fecha) {
+        this.fecha = fecha;
+    }
+
+    public Object getFoto() {
+        return foto;
+    }
+
+    public void setFoto(Object foto) {
+        this.foto = foto;
+    }
+
+    public String getPrecio() {
+        return precio;
+    }
+
+    public void setPrecio(String precio) {
+        this.precio = precio;
     }
 
     public String getFav() {
@@ -56,11 +111,11 @@ public class Evento_usuario {
         this.fav = fav;
     }
 
-    public String getLeido() {
-        return leido;
+    public String getIdEU() {
+        return idEU;
     }
 
-    public void setLeido(String leido) {
-        this.leido = leido;
+    public void setIdEU(String idEU) {
+        this.idEU = idEU;
     }
 }

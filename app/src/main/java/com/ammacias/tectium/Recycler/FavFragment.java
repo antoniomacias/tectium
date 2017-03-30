@@ -105,13 +105,7 @@ public class FavFragment extends Fragment {
                 if (response.isSuccess()){
                     Eventos_usuarios result= response.body();
 
-                    //Para cada id de Evento que tenga
-                    for (Evento_usuario eu: result.getData()) {
-                        //Me traigo el evento y añado a la lista
-                        getEvento(eu.getId());
-                    }
-                    System.out.println("Llamada recycler");
-                    recyclerView.setAdapter(new MyFavRecyclerViewAdapter(listaEventosFinal, mListener));
+                    recyclerView.setAdapter(new MyFavRecyclerViewAdapter(result.getData(), mListener));
                 }
             }
 
