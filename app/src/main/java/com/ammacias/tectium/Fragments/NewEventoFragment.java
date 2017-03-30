@@ -3,6 +3,7 @@ package com.ammacias.tectium.Fragments;
 
 import android.Manifest;
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -16,6 +17,8 @@ import com.ammacias.tectium.Clases.Example;
 import com.ammacias.tectium.Interfaces.IRetrofit;
 import com.ammacias.tectium.NewEventoActivity;
 import com.ammacias.tectium.R;
+import com.ammacias.tectium.Recycler.EventoFragment;
+import com.ammacias.tectium.TabsActivity;
 import com.ammacias.tectium.Utils.Application_vars;
 import com.frosquivel.magicalcamera.MagicalPermissions;
 
@@ -68,7 +71,6 @@ public class NewEventoFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 //System.out.println(String.valueOf(calendarView.getDate()));
-                System.out.println("aaa");
                 Retrofit retrofit1 = new Retrofit.Builder()
                         .baseUrl(IRetrofit.ENDPOINT)
                         .addConverterFactory(GsonConverterFactory.create())
@@ -81,9 +83,9 @@ public class NewEventoFragment extends Fragment {
                     @Override
                     public void onResponse(Response<Example> response, Retrofit retrofit) {
                         if (response.isSuccess()){
-                            if (response.body().getMessage().equalsIgnoreCase("success")){
-                                System.out.println("Evento creado");
-                            }
+                            Intent i = new Intent(getActivity(), TabsActivity.class);
+                            startActivity(i);
+
                         }
                     }
 

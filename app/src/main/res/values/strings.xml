@@ -24,4 +24,7 @@
     <string name="deportivo">Deportivo</string>
     <string name="edit">Editar</string>
     <string name="addTag">Añadir</string>
+    <string name="title_edit">Mis eventos</string>
+    <string name="title_fav">Favoritos</string>
+    <string name="title_events">Eventos</string>
 </resources>

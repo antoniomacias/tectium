@@ -9,4 +9,3 @@
     app:layoutManager="LinearLayoutManager"
     tools:context="com.ammacias.tectium.Recycler.EventoFragment"
     tools:listitem="@layout/fragment_evento_item" />
-

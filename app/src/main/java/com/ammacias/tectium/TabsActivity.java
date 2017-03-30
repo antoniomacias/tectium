@@ -6,8 +6,12 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.view.ContextMenu;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 
 import com.ammacias.tectium.Clases.Evento;
 import com.ammacias.tectium.Clases.Evento_usuario;
@@ -81,6 +85,35 @@ public class TabsActivity extends AppCompatActivity implements ITectium{
                 .commit();
     }
 
+    //Menu
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.context_menu, menu);
+        return true;
+
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_close:
+                Intent i = new Intent(TabsActivity.this, MainActivity.class);
+                startActivity(i);
+                return true;
+            case R.id.action_add:
+                f = new NewEventoFragment();
+
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.content, f)
+                        .commit();
+                return true;
+
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+
+    }
 
     @Override
     public void onClickEvento(Evento e) {
@@ -123,6 +156,27 @@ public class TabsActivity extends AppCompatActivity implements ITectium{
     @Override
     public void onClickFavoritoRecycler(Evento_usuario e) {
 
+    }
+
+    @Override
+    public void onClickFavFav(Evento_usuario e) {
+
+        //TODO: Si existe el registro en la tabla usuario_evento hago update sino inserto
+        existeRegistroDelEvento(e.getId());
+    }
+
+    @Override
+    public void onClickShareFav(Evento_usuario e) {
+        System.out.println("Comparto");
+        Intent sendIntent = new Intent();
+        sendIntent.setAction(Intent.ACTION_SEND);
+        sendIntent.putExtra(Intent.EXTRA_SUBJECT, "Tectium");
+        sendIntent.putExtra(Intent.EXTRA_TEXT, "El usuario "+ ((Application_vars) getApplication()).getUsuario().getNombre()
+                +" "+ ((Application_vars) getApplication()).getUsuario().getApellidos()+" ha compartido un evento.\n"
+                + "Has sido invitado al evento " + e.getNombre()+ " celebrado el "+e.getFecha()+" en " + e.getSitio()+"\n."
+                + e.getDescripcion()+".\nEl precio es de "+e.getPrecio()+".\nEsperamos verte!!");
+        sendIntent.setType("text/plain");
+        startActivity(Intent.createChooser(sendIntent, "Elige la aplicación a compartir"));
     }
 
     private void existeRegistroDelEvento(final String idE) {

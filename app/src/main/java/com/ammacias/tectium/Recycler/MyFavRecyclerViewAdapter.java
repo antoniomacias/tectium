@@ -1,5 +1,6 @@
 package com.ammacias.tectium.Recycler;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,8 @@ import com.ammacias.tectium.Clases.Evento;
 import com.ammacias.tectium.Clases.Evento_usuario;
 import com.ammacias.tectium.Interfaces.ITectium;
 import com.ammacias.tectium.R;
+import com.ammacias.tectium.Utils.RoundedCornersTransform;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -23,8 +26,11 @@ public class MyFavRecyclerViewAdapter extends RecyclerView.Adapter<MyFavRecycler
 
     private final List<Evento_usuario> mValues;
     private final ITectium mListener;
+    Context ctx;
+    int  aux = 0;
 
-    public MyFavRecyclerViewAdapter(List<Evento_usuario> items, ITectium listener) {
+    public MyFavRecyclerViewAdapter(Context ctx,List<Evento_usuario> items, ITectium listener) {
+        this.ctx= ctx;
         mValues = items;
         mListener = listener;
     }
@@ -37,12 +43,42 @@ public class MyFavRecyclerViewAdapter extends RecyclerView.Adapter<MyFavRecycler
     }
 
     @Override
-    public void onBindViewHolder(final ViewHolder holder, int position) {
+    public void onBindViewHolder(final ViewHolder holder, final int position) {
         holder.mItem = mValues.get(position); holder.nombre.setText(mValues.get(position).getNombre());
         holder.sitio.setText(mValues.get(position).getSitio());
         holder.fecha.setText(mValues.get(position).getFecha());
         holder.precio.setText(mValues.get(position).getPrecio());
         holder.descripcion.setText(mValues.get(position).getDescripcion());
+
+        Picasso.with(ctx)
+                .load(R.drawable.imagenevento)
+                .resize(50, 50)
+                .transform(new RoundedCornersTransform())
+                .into(holder.foto);
+
+        holder.fav.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                System.out.println("Recycler: "+mValues.get(position).getFav());
+
+                if(aux==1){
+                    aux=0;
+                    holder.fav.setImageResource(R.drawable.fav);
+                }else{
+                    aux = 1;
+                    holder.fav.setImageResource(R.drawable.nofav);
+                }
+                mListener.onClickFavFav(holder.mItem);
+
+            }
+        });
+
+        holder.compartir.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mListener.onClickShareFav(holder.mItem);
+            }
+        });
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override

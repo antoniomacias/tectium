@@ -13,4 +13,6 @@ public interface ITectium {
     void onClickFav(Evento e);
     void onClickShare(Evento e);
     void onClickFavoritoRecycler(Evento_usuario e);
+    void onClickFavFav(Evento_usuario e);
+    void onClickShareFav(Evento_usuario e);
 }

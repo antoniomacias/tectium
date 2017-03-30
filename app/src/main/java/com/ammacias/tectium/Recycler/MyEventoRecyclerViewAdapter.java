@@ -44,6 +44,7 @@ public class MyEventoRecyclerViewAdapter extends RecyclerView.Adapter<MyEventoRe
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
 
+
         holder.nombre.setText(mValues.get(position).getNombre());
         holder.sitio.setText(mValues.get(position).getSitio());
         holder.fecha.setText(mValues.get(position).getFecha());
@@ -70,6 +71,7 @@ public class MyEventoRecyclerViewAdapter extends RecyclerView.Adapter<MyEventoRe
         holder.fav.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 mListener.onClickFav(holder.mItem);
             }
         });

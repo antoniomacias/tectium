@@ -105,7 +105,7 @@ public class FavFragment extends Fragment {
                 if (response.isSuccess()){
                     Eventos_usuarios result= response.body();
 
-                    recyclerView.setAdapter(new MyFavRecyclerViewAdapter(result.getData(), mListener));
+                    recyclerView.setAdapter(new MyFavRecyclerViewAdapter(getActivity(),result.getData(), mListener));
                 }
             }
 
