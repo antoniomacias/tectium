@@ -130,8 +130,13 @@ public class DetalleEventoFragment extends Fragment {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 deleteTagFromEvent(text);
+                                if (spinnerArray.size()==0) {
+                                    text_tag.setEnabled(true);
+                                }
                                 spinnerArray.add(text);
+                                System.out.println(spinnerArray.size());
                                 mTagContainerLayout1.removeTag(position);
+                                text_tag.setSelection(0);
                             }
                         })
                         .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -168,9 +173,10 @@ public class DetalleEventoFragment extends Fragment {
                     addTagToEvent(text_tag.getSelectedItem().toString());
 
                     spinnerArray.remove(text_tag.getSelectedItem().toString());
-                    text_tag.setSelection(0,true);
-                }else{
 
+                    text_tag.setSelection(0);
+                }else{
+                    text_tag.setEnabled(false);
                 }
 
                 // Add tag in the specified position

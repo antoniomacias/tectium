@@ -158,7 +158,7 @@ public class EventoFragment extends Fragment {
                     Eventos result= response.body();
 
 
-                    recyclerView.setAdapter(new MyEventoRecyclerViewAdapter(result.getData(), mListener));
+                    recyclerView.setAdapter(new MyEventoRecyclerViewAdapter(getActivity(),result.getData(), mListener));
 
                 }
             }

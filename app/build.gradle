@@ -45,4 +45,5 @@ dependencies {
     compile 'com.frosquivel:magicalcamera:5.0.5'
     testCompile 'junit:junit:4.12'
     annotationProcessor 'org.parceler:parceler:1.1.6'
+    compile 'com.squareup.picasso:picasso:2.5.2'
 }

@@ -115,7 +115,7 @@ public class TabsActivity extends AppCompatActivity implements ITectium{
         sendIntent.putExtra(Intent.EXTRA_TEXT, "El usuario "+ ((Application_vars) getApplication()).getUsuario().getNombre()
                 +" "+ ((Application_vars) getApplication()).getUsuario().getApellidos()+" ha compartido un evento.\n"
         + "Has sido invitado al evento " + e.getNombre()+ " celebrado el "+e.getFecha()+" en " + e.getSitio()+"\n."
-        + e.getDescripcion()+".\nEl precio es de + "+e.getPrecio()+".\nEsperamos verte!!");
+        + e.getDescripcion()+".\nEl precio es de "+e.getPrecio()+".\nEsperamos verte!!");
         sendIntent.setType("text/plain");
         startActivity(Intent.createChooser(sendIntent, "Elige la aplicación a compartir"));
         }

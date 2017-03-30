@@ -1,5 +1,6 @@
 package com.ammacias.tectium.Recycler;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +11,8 @@ import android.widget.TextView;
 import com.ammacias.tectium.Clases.Evento;
 import com.ammacias.tectium.Interfaces.ITectium;
 import com.ammacias.tectium.R;
+import com.ammacias.tectium.Utils.RoundedCornersTransform;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -22,8 +25,10 @@ public class MyEventoRecyclerViewAdapter extends RecyclerView.Adapter<MyEventoRe
 
     private final List<Evento> mValues;
     private final ITectium mListener;
+    Context ctx;
 
-    public MyEventoRecyclerViewAdapter(List<Evento> items, ITectium listener) {
+    public MyEventoRecyclerViewAdapter(Context ctx, List<Evento> items, ITectium listener) {
+        this.ctx= ctx;
         mValues = items;
         mListener = listener;
     }
@@ -44,7 +49,12 @@ public class MyEventoRecyclerViewAdapter extends RecyclerView.Adapter<MyEventoRe
         holder.fecha.setText(mValues.get(position).getFecha());
         holder.precio.setText(mValues.get(position).getPrecio());
         holder.descripcion.setText(mValues.get(position).getDescripcion());
-        //holder.foto.setImageBitmap(R.drawable.com_facebook_auth_dialog_background);
+        Picasso.with(ctx)
+                .load(R.drawable.imagenevento)
+                .resize(50, 50)
+                .transform(new RoundedCornersTransform())
+                .into(holder.foto);
+
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
