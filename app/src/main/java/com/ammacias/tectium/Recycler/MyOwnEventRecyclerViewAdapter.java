@@ -1,5 +1,6 @@
 package com.ammacias.tectium.Recycler;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +11,8 @@ import android.widget.TextView;
 import com.ammacias.tectium.Clases.Evento;
 import com.ammacias.tectium.Interfaces.ITectium;
 import com.ammacias.tectium.R;
+import com.ammacias.tectium.Utils.RoundedCornersTransform;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -22,8 +25,10 @@ public class MyOwnEventRecyclerViewAdapter extends RecyclerView.Adapter<MyOwnEve
 
     private final List<Evento> mValues;
     private final ITectium mListener;
+    Context ctx;
 
-    public MyOwnEventRecyclerViewAdapter(List<Evento> items, ITectium listener) {
+    public MyOwnEventRecyclerViewAdapter(Context ctx,List<Evento> items, ITectium listener) {
+        this.ctx= ctx;
         mValues = items;
         mListener = listener;
     }
@@ -42,10 +47,25 @@ public class MyOwnEventRecyclerViewAdapter extends RecyclerView.Adapter<MyOwnEve
         holder.nombre.setText(mValues.get(position).getNombre());
         holder.sitio.setText(mValues.get(position).getSitio());
         holder.fecha.setText(mValues.get(position).getFecha());
-        holder.precio.setText(mValues.get(position).getPrecio());
+        if (mValues.get(position).getPrecio().equals("Gratis")){
+            holder.precio.setText(mValues.get(position).getPrecio());
+        }else{
+            holder.precio.setText(mValues.get(position).getPrecio()+ "€");
+        }
         holder.descripcion.setText(mValues.get(position).getDescripcion());
-        //holder.foto.setImageBitmap(R.drawable.com_facebook_auth_dialog_background);
 
+        Picasso.with(ctx)
+                .load(R.drawable.imagenevento)
+                .resize(50, 50)
+                .transform(new RoundedCornersTransform())
+                .into(holder.foto);
+
+        holder.compartir.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mListener.onClickShare(holder.mItem);
+            }
+        });
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -71,8 +91,8 @@ public class MyOwnEventRecyclerViewAdapter extends RecyclerView.Adapter<MyOwnEve
         public final TextView precio;
         public final TextView descripcion;
         public final ImageView foto;
-        public final ImageView fav;/**
-         public final ImageView compartir;
+        public final ImageView fav;
+        public final ImageView compartir;/*
          public final ImageView img_fecha;
          public final ImageView img_precio;*/
         public Evento mItem;
@@ -88,8 +108,8 @@ public class MyOwnEventRecyclerViewAdapter extends RecyclerView.Adapter<MyOwnEve
             descripcion = (TextView) view.findViewById(R.id.descripcion);
 
             foto = (ImageView) view.findViewById(R.id.fotoEvento);
-            fav = (ImageView) view.findViewById(R.id.fav);/*
-            compartir = (ImageView) view.findViewById(R.id.compartir);
+            fav = (ImageView) view.findViewById(R.id.fav);
+            compartir = (ImageView) view.findViewById(R.id.compartir);/*
             img_fecha = (ImageView) view.findViewById(R.id.img_fecha);
             img_precio = (ImageView) view.findViewById(R.id.img_precio);*/
         }

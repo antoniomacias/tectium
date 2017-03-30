@@ -48,7 +48,11 @@ public class MyEventoRecyclerViewAdapter extends RecyclerView.Adapter<MyEventoRe
         holder.nombre.setText(mValues.get(position).getNombre());
         holder.sitio.setText(mValues.get(position).getSitio());
         holder.fecha.setText(mValues.get(position).getFecha());
-        holder.precio.setText(mValues.get(position).getPrecio());
+        if (mValues.get(position).getPrecio().equals("Gratis")){
+            holder.precio.setText(mValues.get(position).getPrecio());
+        }else{
+            holder.precio.setText(mValues.get(position).getPrecio()+ "€");
+        }
         holder.descripcion.setText(mValues.get(position).getDescripcion());
         Picasso.with(ctx)
                 .load(R.drawable.imagenevento)

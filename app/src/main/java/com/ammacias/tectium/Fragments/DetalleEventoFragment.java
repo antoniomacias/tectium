@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -29,6 +30,7 @@ import com.ammacias.tectium.R;
 import com.ammacias.tectium.Recycler.OwnEventFragment;
 import com.ammacias.tectium.TabsActivity;
 import com.ammacias.tectium.Utils.Application_vars;
+import com.ammacias.tectium.Utils.RoundedCornersTransform;
 import com.ammacias.tectium.localdb.CategoriaDB;
 import com.ammacias.tectium.localdb.CategoriaDBDao;
 import com.ammacias.tectium.localdb.DatabaseConnection;
@@ -37,6 +39,7 @@ import com.robertlevonyan.views.chip.OnChipClickListener;
 import com.robertlevonyan.views.chip.OnCloseClickListener;
 import com.robertlevonyan.views.chip.OnIconClickListener;
 import com.robertlevonyan.views.chip.OnSelectClickListener;
+import com.squareup.picasso.Picasso;
 
 import org.parceler.Parcels;
 
@@ -67,6 +70,7 @@ public class DetalleEventoFragment extends Fragment {
     //Edit
     EditText nombre, sitio, descripcion,fecha, precio;
     Button btn_edit;
+    ImageView fotoEvento;
     public DetalleEventoFragment() {
         // Required empty public constructor
     }
@@ -87,6 +91,12 @@ public class DetalleEventoFragment extends Fragment {
         fecha = (EditText)v.findViewById(R.id.fecha);
         precio = (EditText)v.findViewById(R.id.precio);
         btn_edit = (Button)v.findViewById(R.id.btn_edit);
+        fotoEvento = (ImageView)v.findViewById(R.id.fotoEvento);
+        Picasso.with(getActivity())
+                .load(R.drawable.imagenevento)
+                .resize(50, 50)
+                .transform(new RoundedCornersTransform())
+                .into(fotoEvento);
 
 
         nombre.setText(evento.getNombre());

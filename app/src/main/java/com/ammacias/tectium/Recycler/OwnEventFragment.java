@@ -102,7 +102,7 @@ public class OwnEventFragment extends Fragment {
                 if (response.isSuccess()){
                     Eventos result= response.body();
 
-                    recyclerView.setAdapter(new MyOwnEventRecyclerViewAdapter(result.getData(), mListener));
+                    recyclerView.setAdapter(new MyOwnEventRecyclerViewAdapter(getActivity(),result.getData(), mListener));
 
                 }
             }
