@@ -58,6 +58,7 @@ public class NewEventoFragment extends Fragment {
         timeEvento = (EditText)v.findViewById(R.id.timeEvento);
         b = (Button) v.findViewById(R.id.addEvento);
 
+        //Permisos de la camara
         String[] permissions = new String[] {
                 Manifest.permission.CAMERA,
                 Manifest.permission.READ_EXTERNAL_STORAGE,
@@ -67,10 +68,11 @@ public class NewEventoFragment extends Fragment {
         };
         magicalPermissions = new MagicalPermissions(this, permissions);
 
+        //onclick de un boton
         b.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //System.out.println(String.valueOf(calendarView.getDate()));
+                //Petición retrofit que crea un evento
                 Retrofit retrofit1 = new Retrofit.Builder()
                         .baseUrl(IRetrofit.ENDPOINT)
                         .addConverterFactory(GsonConverterFactory.create())

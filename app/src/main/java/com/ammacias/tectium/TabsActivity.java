@@ -165,6 +165,7 @@ public class TabsActivity extends AppCompatActivity implements ITectium{
         existeRegistroDelEvento(e.getId());
     }
 
+    //Intent para compartir
     @Override
     public void onClickShareFav(Evento_usuario e) {
         System.out.println("Comparto");
@@ -179,13 +180,14 @@ public class TabsActivity extends AppCompatActivity implements ITectium{
         startActivity(Intent.createChooser(sendIntent, "Elige la aplicación a compartir"));
     }
 
+    //Petición retrofit que devuelve si existe el registro del evento en la tabla usuario_evento.
+    //Si existe hacemos un UPDATE, sino un INSERT
     private void existeRegistroDelEvento(final String idE) {
         Retrofit retrofit1 = new Retrofit.Builder()
                 .baseUrl(IRetrofit.ENDPOINT)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
-        //TODO: No es 1, es usuario.getId() de APPLICATION
         retrofit1.create(IRetrofit.class).getOneEventUsuario(((Application_vars)getApplication()).getUsuario().getId(), idE).enqueue(new Callback<Evento_usuario>() {
 
             @Override
@@ -209,6 +211,7 @@ public class TabsActivity extends AppCompatActivity implements ITectium{
         });
     }
 
+    //Petición retrofit que actualiza el estado de un usuario_evento
     private void updateEventoUsuario(String idE, String fav) {
         String favoritoFinal;
         if (Integer.parseInt(fav)==0){
@@ -240,6 +243,7 @@ public class TabsActivity extends AppCompatActivity implements ITectium{
 
     }
 
+    //Petición retrofit que crea el estado de un usuario_evento
     private void crearEventoUsuario(String idE) {
         Retrofit retrofit1 = new Retrofit.Builder()
                 .baseUrl(IRetrofit.ENDPOINT)

@@ -72,18 +72,19 @@ public class MainActivity extends AppCompatActivity{
 
 
 
+
         iniciar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 boolean first_run = false;
+
+                //Instanciamos las prefs
                 SharedPreferences settings = getSharedPreferences("PREFS_NAME", 0);
                 first_run = settings.getBoolean("FIRST_RUN", false);
+                //Si es la primera vez que se inicia la APP
                 if (!first_run) { // do the thing for the first time
 
-
-                    System.out.println("*****************************\n****************************\nENTRO POR PRIMERA VEZ");
                     getCategorias();
-
 
                     settings = getSharedPreferences("PREFS_NAME", 0);
                     SharedPreferences.Editor editor = settings.edit();
@@ -101,6 +102,7 @@ public class MainActivity extends AppCompatActivity{
         loginButton.setReadPermissions(Arrays.asList(
                 "public_profile", "email", "user_birthday")); //, "user_birthday", "user_friends"
 
+        //Callback de facebook para peticion interna
         loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
@@ -109,6 +111,7 @@ public class MainActivity extends AppCompatActivity{
                 id_facebook = loginResult.getAccessToken().getUserId();
                 token_id= loginResult.getAccessToken().getToken();
 
+                //Datos de Facebook
                 String accessToken = loginResult.getAccessToken().getToken();
                 GraphRequest request = GraphRequest.newMeRequest(loginResult.getAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
 
@@ -175,6 +178,7 @@ public class MainActivity extends AppCompatActivity{
         });
     }
 
+    //Petición retrofit que devuelve si el mail esta en la bbdd
     private void loginPorMail() {
         Retrofit retrofit1 = new Retrofit.Builder()
                 .baseUrl(IRetrofit.ENDPOINT)
@@ -213,6 +217,7 @@ public class MainActivity extends AppCompatActivity{
         });
     }
 
+    //Result que devuelve el login de FACEBOOK. Segun lo que devuelva sabemos si ha logeado correctamente
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         callbackManager.onActivityResult(requestCode, resultCode, data);
@@ -265,6 +270,7 @@ public class MainActivity extends AppCompatActivity{
         return null; //¿?
     }
 
+    //Petición retrofit que crea un usuario
     public void crearUsuario(){
         Retrofit retrofit1 = new Retrofit.Builder()
                 .baseUrl(IRetrofit.ENDPOINT)
@@ -287,6 +293,7 @@ public class MainActivity extends AppCompatActivity{
         });
     }
 
+    //Petición retrofit que obtiene un usuario por el token de FACEBOOK y lo guarda en APPLICATION
     private void dameUsuario() {
 
         Retrofit retrofit1 = new Retrofit.Builder()
@@ -306,7 +313,6 @@ public class MainActivity extends AppCompatActivity{
                                 response.body().getIdFacebook(), response.body().getFoto(), response.body().getSexo(),
                                 response.body().getCumpleanos(), response.body().getAdmin());
                         ((Application_vars) getApplication()).setUsuario(current_user);
-                        System.out.println("Dame usuario method: "+current_user);
                     }
                 }
             }
@@ -318,6 +324,8 @@ public class MainActivity extends AppCompatActivity{
         });
     }
 
+    //Petición retrofit que busca si existe el usuario, si existe lo guarda en APPLICATION y logea
+    //Si no existe lo crea en la bbdd, guarda en APPLICATION y logea
     public void usuarioExiste(){
         Retrofit retrofit1 = new Retrofit.Builder()
                 .baseUrl(IRetrofit.ENDPOINT)
@@ -354,6 +362,8 @@ public class MainActivity extends AppCompatActivity{
         });
     }
 
+    //Petición retrofit que devuelve las categorias y lo guarda en la BBDD de GreenDao, para tenerlas
+    //disponibles en la bbdd local del movil del usuario
     public void getCategorias() {
 
         Retrofit retrofit1 = new Retrofit.Builder()

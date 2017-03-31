@@ -28,6 +28,7 @@ import retrofit.http.Query;
 public interface IRetrofit {
     String ENDPOINT = "http://www.antoniomacias.esy.es/api.php/";
 
+    //Crea un usuario
     @FormUrlEncoded
     @POST("usuario")
     Call<Usuario> createUser(@Field("nombre") String nombre, @Field("apellidos") String apellidos,
@@ -35,9 +36,11 @@ public interface IRetrofit {
                              @Field("id_facebook") String id_facebook, @Field("foto") String foto,
                              @Field("sexo") String sexo, @Field("cumpleanos") String cumpleanos);
 
+    //GET usuario por id
     @GET("usuario/{id}")
     Call<Usuario> getUsuario(@Path("id") String idFace);
 
+    //GET lista de eventos
     @GET("eventos")
     Call<Eventos> getFullEvents();
 
@@ -49,6 +52,7 @@ public interface IRetrofit {
     @GET("evento/{id}")
     Call<Evento> getEvent(@Path("id") String id);
 
+    //GET lista de categorias
     @GET("categorias")
     Call<Categorias> getCategorias();
 

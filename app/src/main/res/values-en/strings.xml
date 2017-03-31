@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Tectium</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="user">User</string>
+    <string name="password">Password</string>
+    <string name="log">Log in</string>
+    <string name="help_login_text">¿Forgot your login information? Get help.</string>
+
+
+    <string name="facebook_app_id">1720065391618313</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="add">ADD</string>
+    <string name="new_event">Add event</string>
+    <string name="social">Social</string>
+    <string name="corporativo">Corporate</string>
+    <string name="publico">Public</string>
+    <string name="religioso">Religious</string>
+    <string name="cultural">Cultural</string>
+    <string name="empresarial">Businnes</string>
+    <string name="deportivo">Sports</string>
+    <string name="edit">Edit</string>
+    <string name="addTag">ADD</string>
+    <string name="title_edit">My Events</string>
+    <string name="title_fav">My Favorites</string>
+    <string name="title_events">My Events</string>
+</resources>

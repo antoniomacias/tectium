@@ -140,7 +140,7 @@ public class EventoFragment extends Fragment {
         mListener = null;
     }
 
-
+    //Petición retrofit que trae todos los eventos
     private void getEventos() {
 
         Retrofit retrofit1 = new Retrofit.Builder()
@@ -158,6 +158,7 @@ public class EventoFragment extends Fragment {
                     Eventos result= response.body();
 
 
+                    //damos los datos al recycler
                     recyclerView.setAdapter(new MyEventoRecyclerViewAdapter(getActivity(),result.getData(), mListener));
 
                 }

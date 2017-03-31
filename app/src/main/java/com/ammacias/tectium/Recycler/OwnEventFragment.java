@@ -86,6 +86,7 @@ public class OwnEventFragment extends Fragment {
         return view;
     }
 
+    //Petición retrofit que trae los eventos creados por un usuario
     private void getOwnEvents() {
 
         Retrofit retrofit1 = new Retrofit.Builder()

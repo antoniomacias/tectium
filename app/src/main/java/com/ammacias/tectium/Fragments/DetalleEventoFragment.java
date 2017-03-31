@@ -92,6 +92,7 @@ public class DetalleEventoFragment extends Fragment {
         precio = (EditText)v.findViewById(R.id.precio);
         btn_edit = (Button)v.findViewById(R.id.btn_edit);
         fotoEvento = (ImageView)v.findViewById(R.id.fotoEvento);
+        //Pinto Picasso
         Picasso.with(getActivity())
                 .load(R.drawable.imagenevento)
                 .resize(50, 50)
@@ -131,6 +132,9 @@ public class DetalleEventoFragment extends Fragment {
                         Toast.LENGTH_SHORT).show();*/
             }
 
+            //Cuando clickeo en un tag, creamos un dialogo de confirmacion para borrar el tag.
+            //Si confirma, eliminamos el tag del recycler, lo añadimos al array del spinner, y
+            //llamamos a una peticion para q borre el tag de la tabla intermedia.
             @Override
             public void onTagLongClick(final int position, final String text) {
                 AlertDialog dialog = new AlertDialog.Builder(getActivity())
@@ -171,8 +175,9 @@ public class DetalleEventoFragment extends Fragment {
         //mTagContainerLayout1.setTags(list2);
 
 
-        //Añadimos el TAG y lo quitamos del Spinner
-        //final EditText text = (EditText) v.findViewById(R.id.text_tag);
+        //Añadimos el TAG al recycler de la vista. Lo quitamos de la lista del spinner y lo
+        // añadimos a la la tabla intermedia por retrofit
+
         Button btnAddTag = (Button) v.findViewById(R.id.btn_add_tag);
         btnAddTag.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -196,6 +201,7 @@ public class DetalleEventoFragment extends Fragment {
         return v;
     }
 
+    //Petición retrofit que elimina el tag del evento
     private void deleteTagFromEvent(String text) {
         CategoriaDBDao categoriaDBDao = DatabaseConnection.getCategoriaDBDao(getActivity());
         List<CategoriaDB> categoriaDB = categoriaDBDao.loadAll();
@@ -206,8 +212,6 @@ public class DetalleEventoFragment extends Fragment {
                 id_tag = String.valueOf(c.getId());
             }
         }
-
-
 
         Retrofit retrofit1 = new Retrofit.Builder()
                 .baseUrl(IRetrofit.ENDPOINT)
@@ -234,6 +238,7 @@ public class DetalleEventoFragment extends Fragment {
         });
     }
 
+    //Petición retrofit que añade el tag al evento
     private void addTagToEvent(String taG_name) {
         CategoriaDBDao categoriaDBDao = DatabaseConnection.getCategoriaDBDao(getActivity());
         List<CategoriaDB> categoriaDB = categoriaDBDao.loadAll();
@@ -271,6 +276,7 @@ public class DetalleEventoFragment extends Fragment {
         });
     }
 
+    //Petición retrofit que que edita un evento creado por el usuario
     private void editarOwnEvent() {
         Retrofit retrofit1 = new Retrofit.Builder()
                 .baseUrl(IRetrofit.ENDPOINT)
@@ -305,6 +311,7 @@ public class DetalleEventoFragment extends Fragment {
         });
     }
 
+    //Petición retrofit que trae las categorias de un evento para darselas al spinner
     private void datosSpinner() {
 
         Retrofit retrofit1 = new Retrofit.Builder()

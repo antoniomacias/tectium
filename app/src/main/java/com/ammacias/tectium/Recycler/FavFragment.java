@@ -90,6 +90,7 @@ public class FavFragment extends Fragment {
         return view;
     }
 
+    //Petición retrofit que trae los eventos favoritos de un usuario
     private void getDatos() {
         Retrofit retrofit1 = new Retrofit.Builder()
                 .baseUrl(IRetrofit.ENDPOINT)
@@ -117,6 +118,7 @@ public class FavFragment extends Fragment {
 
     }
 
+    //Petición retrofit que trae un evento en concreto
     private void getEvento(String idEvento) {
 
         Retrofit retrofit1 = new Retrofit.Builder()
